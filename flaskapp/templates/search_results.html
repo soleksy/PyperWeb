@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<script>
+   function toggle_display(val) {
+   
+       el = document.querySelector('.ABC' + val);
+       console.log('.ABC' + val);
+   
+       if (el.style.display == 'none') {
+           el.style.display = 'block';
+       } else {
+           el.style.display = 'none';
+       }
+   }
+</script>
+{% extends 'base.html' %}
+{% block scripts %}
+{{ super() }}
+{{ datepicker.loader(theme="blitzer") }} {# to load jQuery-ui #}
+{{ datepicker.picker(id=".dp",dateFormat='yy-mm-dd') }}
+{% endblock %}
+{% block title %} Search Results {% endblock %} {%
+block content %}
+<div class="main-container">
+   <div class="search-result-wrapper">
+       
+      <div class="search-results-container" id="style-12">
+         {% set count = namespace(value=0) %}
+         
+         {% if results is defined %}
+
+         {% for article in results.items%}
+         <div class="article-wrapper">
+            <h3>{{article.title}}</h3>
+            <h6>Source: {{article.source}}</h6>
+            {% if article.description%}
+            <section class="ABC{{count.value}}" id="style-12" style="display: none; overflow-y: scroll; max-height: 100px;">
+               <h6>{{article.description}}</h6>
+            </section>
+            <button class="btn btn-outline-primary fs-5 fw-bold" onclick="toggle_display({{count.value}})">
+            Show abstract
+            </button>
+            {% endif %}
+            <form action="#" method="post">
+               <input type="text" class="btn-check" name="info" value="{{count.value}}" />
+               <button class="btn btn-outline-primary fs-5 fw-bold" type="submit" value="submit">
+               More information
+               </button>
+               {% set count.value = count.value + 1 %}
+            </form>
+         </div>
+         {% endfor %}
+         {% else %}
+         <div class="search-failed-wrapper">
+          <h2> No results found </h2>
+          
+            <a type="button" class="btn btn-primary btn-lg"  href="/"> Back to searchbar</a>
+            {% if searchURL %}
+            <a type="button" class="btn btn-primary btn-lg"  href={{searchURL}}> Back to searchresults</a>
+            {% endif %}
+
+          </div>
+          {% endif %}
+         </div>
+
+   </div>
+   {% if results is defined %}
+   <div class="side-panel-container">
+      <div class="side-panel-wrapper1">
+         <article>
+         <h2>Search results for:</h2>
+         <br />
+         <h3> "{{txt}}"          {% if startDate %}
+          between</br>
+          {{startDate}} 
+          and 
+          {{endDate}}
+          {% endif %}</h3> 
+
+         </aritcle>
+      </div>
+      <div class="side-panel-wrapper2">
+         <h3> Select a date range </h3>
+         <form action="" method='POST' name="myform">
+            <section>
+               {{ form.csrf_token }}
+               <b>{{ form.startDate.label }}</b><br/>
+               {{form.startDate(class='datepicker')}}
+               {{form.hidden_tag()}}
+            </section>
+            <section>
+               <b>{{form.endDate.label}}</b><br/>
+               {{form.endDate(class='datepicker', default=endDate)}} 
+               {{form.hidden_tag()}}
+            </section>
+            <button class="btn btn-outline-primary fs-5 fw-bold" type="Submit" value="Submit" onSubmit={{form.submit()}}
+                Submit
+            </button>
+         </form>
+           <a type="button" class="btn btn-primary btn-lg"  href="{{url_for('searchResults',page=1,txt=txt,hep=hep,arxiv=arxiv,filters=1)}}"> Clear filters</a>
+      </div>
+      <!-- Pagination Links-->
+      <div  div class="pagination-page-info">
+         {% for page_num in results.iter_pages(left_edge=1, right_edge=2, left_current=1, right_current=2) %}
+            {% if page_num %}
+            {% if results.page == page_num %}
+            <a a href="{{ url_for('searchResults', page=page_num,arxiv=arxiv,txt=txt,hep=hep,filters=0) }}"
+               class="btn btn-dark btn-lg">
+                  {{ page_num }}
+            </a>
+            {% else %}
+               <a href="{{ url_for('searchResults',page=page_num,arxiv=arxiv,txt=txt,hep=hep,filters=0) }}"
+                  class="btn btn-outline-dark btn-lg">
+                  {{ page_num }}
+               </a>
+            {% endif %}
+            {% else %}
+               ...
+            {% endif %}
+      {% endfor %}
+
+</div>
+<p class="text-right mt-6 1.2rem">
+Showing page {{ results.page }} of {{ results.pages }}
+</p>
+   </div>
+   {% endif %}
+</div>
+{% endblock %}

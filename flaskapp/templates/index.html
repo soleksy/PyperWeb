@@ -1,0 +1,38 @@
+{% extends 'base.html' %} {% block title %}Pyper {% endblock %} {% block content
+%}
+
+<div class="center">
+  <h1><b>Pyper</b></h1>
+  <p>Search for papers across the web.</p>
+  <form action="#" method="post">
+    <input
+      class="input-align"
+      type="text"
+      placeholder="Search for scientific articles"
+      aria-label="Search"
+      name="searchText"
+    />
+    <button class="button-align" type="submit" value="submit">Search</button>
+    <input
+      type="checkbox"
+      class="btn-check"
+      id="btncheck1"
+      name="hep"
+      autocomplete="off"
+    />
+    <label class="btn btn-outline-primary fs-3 fw-bold" for="btncheck1"
+      >HEP</label
+    >
+    <input
+      type="checkbox"
+      class="btn-check"
+      id="btncheck2"
+      autocomplete="off"
+      name="arxiv"
+    />
+    <label class="btn btn-outline-primary fs-3 fw-bold" for="btncheck2"
+      >arXiv</label
+    >
+  </form>
+</div>
+{% endblock %}
