@@ -2,9 +2,12 @@ from flaskapp import db
 import json
 import sqlalchemy
 from sqlalchemy.types import TypeDecorator
+from .constants import SIZE
+from sqlalchemy import create_engine, MetaData
 
-ITEMS_PER_PAGE = 9
-SIZE=256
+engine = create_engine('sqlite:////tmp/test.db', echo = True)
+meta = MetaData()
+
 
 class TextPickleType(TypeDecorator):
     impl = sqlalchemy.Text(SIZE)
@@ -12,7 +15,6 @@ class TextPickleType(TypeDecorator):
     def process_bind_param(self, value, dialect):
         if value is not None:
             value = json.dumps(value)
-
         return value
 
     def process_result_value(self, value, dialect):
@@ -37,4 +39,5 @@ class Article(db.Model):
     bibtex = db.Column(TextPickleType())
     def __repr__(self):
         return '<Article %r>' % self.title
-    
+
+meta.create_all(engine)

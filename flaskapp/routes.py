@@ -5,14 +5,18 @@ from flaskapp.models import Article
 from .APIS.ARXIV.ArxivClasses import ArxivHelper,ArxivParser
 from .APIS.HEP.HepClasses import HepHelper ,  HepParser
 import asyncio , httpx
-ITEMS_PER_PAGE = 9
-SIZE=256
+from .constants import SIZE , ITEMS_PER_PAGE 
+from sqlalchemy import create_engine
+import sqlalchemy
+
+
+articles = [] # stores list entities
+filteredArticleList = [] # stores articles post filters
+visibleArticles = [] # stores articles that are being displayed atm
 
 searchController = 0 # controlls whether the initial search was processed
 searched = False #?
-page = 0
-articles = [] # stores list entities
-filteredArticleList = []
+page = 0 # basic controlling attribute
 startDate = None # controlls the filters
 endDate = None # controlls the filters
 
@@ -77,6 +81,13 @@ def clearData(session):
     for table in reversed(meta.sorted_tables):
         session.execute(table.delete())
     session.commit()
+
+def checkTableExistance(tableName):
+    engine = create_engine("sqlite:////tmp/test.db")
+    if sqlalchemy.inspect(engine).has_table(tableName):
+        return True
+    else:
+        return False
     
 
 @app.route('/' , methods=['GET' ,'POST'])
@@ -111,12 +122,16 @@ async def searchResults(txt,hep,arxiv,filters):
     global searchController
     global startDate
     global endDate
-    global articles
+    
+    global articles #original search
+    global filteredArticleList #post filter
+    global visibleArticles #articles being displayed
     global searched
-    global filteredArticleList
+
     
     arxivArticleList = []
     hepArticleList = []
+    
     dbToSearch = []
     listOfApiCalls = []
     index = 0
@@ -125,8 +140,6 @@ async def searchResults(txt,hep,arxiv,filters):
     #handle date range submit
     form = InfoForm()
     if form.validate_on_submit():
-        filteredArticleList = []
-
         tempStartDate = startDate
         tempEndDate = endDate
         startDate = form.startDate.data.strftime("%m/%d/%Y")
@@ -135,9 +148,8 @@ async def searchResults(txt,hep,arxiv,filters):
         endYear = int(form.endDate.data.strftime("%Y"))
         
         LocalArticles = Article.query.filter(Article.yearPublished<=endYear,Article.yearPublished>=startYear).paginate(page=1,per_page=ITEMS_PER_PAGE)
-        print(LocalArticles)
-
-        if len(filteredArticleList) == 0:
+        
+        if len(LocalArticles) == 0:
             startDate = tempStartDate
             endDate = tempEndDate
             return render_template('search_results.html' , hep=hep,txt=txt,arxiv=arxiv, results=LocalArticles , form=form,startDate=startDate,endDate=endDate,searchURL=session.get('searchURL'))
@@ -149,14 +161,11 @@ async def searchResults(txt,hep,arxiv,filters):
         articleID = request.form.get("info")
         return redirect(url_for('articlePage',id = articleID))
 
-    
-    
     elif searchController == 1:
         searched = False
         startDate = None
         endDate = None
         
-
         if arxiv:
             arxivHelper = ArxivHelper()
             url = arxivHelper.allParamSearch(txt)
@@ -173,7 +182,7 @@ async def searchResults(txt,hep,arxiv,filters):
             )
             await client.aclose()
 
-        if arxiv :
+        if arxiv:
             arxivParser = ArxivParser(dbToSearch[index].content)
             arxivParser.standardizeXml()
             arxivParser.parseXML()
@@ -192,7 +201,11 @@ async def searchResults(txt,hep,arxiv,filters):
         if len(articles) == 0:
             session['searchURL'] = None
         else:
-            clearData(db.session)
+            if checkTableExistance("Article"):
+                clearData(db.session)
+            else:
+                db.create_all()
+            
             for article in articles:
                 db.session.add(Article(title=article.get('Title'), description=article.get('Summary'), source=article.get('DB')
                                        ,firstAuthor=article.get('FirstAuthor'), yearPublished=article.get('Year'),
@@ -204,8 +217,6 @@ async def searchResults(txt,hep,arxiv,filters):
             
             page = request.args.get('page',1,type=int)
             articles= Article.query.paginate(page=page,per_page=ITEMS_PER_PAGE)
-            
-        print(articles)
         return render_template('search_results.html' ,page=page,hep=hep,arxiv=arxiv, results=articles  ,txt=txt, form=form,startDate=startDate,endDate=endDate,searchURL=session.get('searchURL'))
         
     else:
