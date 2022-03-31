@@ -49,17 +49,7 @@ block content %}
             </form>
          </div>
          {% endfor %}
-         {% else %}
-         <div class="search-failed-wrapper">
-          <h2> No results found </h2>
-          
-            <a type="button" class="btn btn-primary btn-lg"  href="/"> Back to searchbar</a>
-            {% if searchURL %}
-            <a type="button" class="btn btn-primary btn-lg"  href={{searchURL}}> Back to searchresults</a>
-            {% endif %}
-
-          </div>
-          {% endif %}
+         {% endif %}
          </div>
 
    </div>
@@ -96,19 +86,19 @@ block content %}
                 Submit
             </button>
          </form>
-           <a type="button" class="btn btn-primary btn-lg"  href="{{url_for('searchResults',page=1,txt=txt,hep=hep,arxiv=arxiv,filters=1)}}"> Clear filters</a>
+           <a type="button" class="btn btn-primary btn-lg"  href="{{url_for('searchResults',page=1,txt=txt)}}"> Clear filters</a>
       </div>
       <!-- Pagination Links-->
       <div  div class="pagination-page-info">
          {% for page_num in results.iter_pages(left_edge=1, right_edge=2, left_current=1, right_current=2) %}
             {% if page_num %}
             {% if results.page == page_num %}
-            <a a href="{{ url_for('searchResults', page=page_num,arxiv=arxiv,txt=txt,hep=hep,filters=0) }}"
+            <a a href="{{ url_for('searchResults', page=page_num,txt=txt) }}"
                class="btn btn-dark btn-lg">
                   {{ page_num }}
             </a>
             {% else %}
-               <a href="{{ url_for('searchResults',page=page_num,arxiv=arxiv,txt=txt,hep=hep,filters=0) }}"
+               <a href="{{ url_for('searchResults',page=page_num,txt=txt) }}"
                   class="btn btn-outline-dark btn-lg">
                   {{ page_num }}
                </a>
