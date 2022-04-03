@@ -6,6 +6,12 @@
   }
 </script>
 {% endblock %}
+
+<script>
+  function clearStorage() {
+    localStorage.clear();
+  }
+</script>
 <body onload="setDefault()">
   <div class="center">
     <h1><b>Pyper</b></h1>
@@ -20,7 +26,14 @@
         name="searchText"
         id="fee"
       />
-      <button class="button-align" type="submit" value="submit">Search</button>
+      <button
+        class="button-align"
+        type="submit"
+        value="submit"
+        onclick="clearStorage()"
+      >
+        Search
+      </button>
       <input
         type="checkbox"
         class="btn-check"

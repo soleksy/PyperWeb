@@ -20,6 +20,8 @@ page = 0 # basic controlling attribute
 startDate = None # controlls the filters
 endDate = None # controlls the filters
 
+
+
 def updateArticleList(listOfArticles):    
     global articles
     articles = listOfArticles
@@ -210,7 +212,7 @@ async def searchResults(txt):
                                        ,firstAuthor=article.get('FirstAuthor'), yearPublished=article.get('Year'),
                                        numberOfAuthors=article.get('AuthorCount'),journal=article.get('Journal'),
                                        volume=article.get('Volume'),pages=article.get('Pages'),DOI=article.get('Doi'),
-                                       eprint=article.get('eprint'),bibtex=article.get('Bibtex')))
+                                       eprint=article.get('eprint'),bibtex=article.get('Bibtex'),isSelected=False))
             db.session.commit()
             session['searchURL'] = f"/search_results/query{txt}"
             
@@ -260,14 +262,6 @@ async def searchResults(txt):
             articles = Article.query.paginate(page=page,per_page=ITEMS_PER_PAGE)
             return render_template('search_results.html' ,results=articles  ,txt=txt, form=form,startDate=startDate,endDate=endDate,searchURL=session.get('searchURL'))
             
-        if len(filteredArticleList.items) == 0 and not searched:
-            startDate = None
-            endDate = None
-            return render_template('search_results.html' , results=articles, txt=txt ,form=form,startDate=startDate,endDate=endDate,searchURL=session.get('searchURL'))
-        elif len(filteredArticleList.items) == 0 and searched:
-            return render_template('search_results.html' , results=articles, txt=txt,form=form,startDate=startDate,endDate=endDate,searchURL=session.get('searchURL'))
-        else:
-            return render_template('search_results.html' , results=articles, txt=txt,form=form,startDate=startDate,endDate=endDate,searchURL=session.get('searchURL'))
 
 
 @app.route('/search_result/reset')
@@ -294,6 +288,13 @@ def articlePage(id):
     return render_template('article.html' , bibtex=bibtex, article=article ,searchURL=session.get('searchURL'),)
 
 
+@app.route('/api/state/change/<parameter>' , methods=['GET' ,'POST'])
+def changeState(parameter):
+    global articles
+    print(parameter)
+    
+    return 200
+    
 @app.route('/about')
 def about():
     return render_template('about.html')

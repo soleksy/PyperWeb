@@ -1,7 +1,11 @@
 <!DOCTYPE html>
+<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+
+
+
 <script>
    function toggle_display(val) {
-   
+      
        el = document.querySelector('.ABC' + val);
        console.log('.ABC' + val);
    
@@ -12,24 +16,129 @@
        }
    }
 </script>
+
+
+
+<script>
+   function changeState(iterator){
+      var xhr = new XMLHttpRequest();
+      base = '/api/state/change/'
+      var url = base.concat(iterator)
+
+      console.log(url)
+      xhr.open('POST', url, true);
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+      xhr.onreadystatechange = function() { // Call a function when the state changes.
+         if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+             // Request finished. Do processing here.
+         }
+     }
+
+      xhr.send(iterator);
+
+   }
+</script>
+
+<script>
+   function printChecked(){
+
+      var checkboxValues = JSON.parse(localStorage.getItem('checkboxValues')) || {};
+      console.log(checkboxValues)
+      $('input:checkbox').each(function(){
+         if(checkboxValues[this.id] == true){
+            console.log(this.id)
+         }
+       });
+   }
+</script>
+
+<script>
+   function getCheckedAsString(){
+      var checkboxValues = JSON.parse(localStorage.getItem('checkboxValues')) || {};
+      var value = ""
+ 
+      $('input:checkbox').each(function(){
+         if(checkboxValues[this.id] == true){
+            value = value.concat(this.id)
+         }
+       });
+
+       console.log(value)
+   }
+
+</script>
+
+
+<script>
+
+   var checkboxValues = JSON.parse(localStorage.getItem('checkboxValues')) || {};
+   var $checkboxes = $('input:checkbox');
+   
+   $(document).ready(function(e) {   
+      $('input:checkbox').change(function () {
+         $('input:checkbox').each(function(){
+            checkboxValues[this.id] = this.checked;
+          });
+         localStorage.setItem("checkboxValues", JSON.stringify(checkboxValues));
+     });
+     $.each(checkboxValues, function(key, value) {
+      $("#" + key).prop('checked', value);
+    });
+   });
+
+</script>
+
+<script>
+   function getChecked(){
+      var checkboxValues = JSON.parse(localStorage.getItem('checkboxValues')) || {};
+
+      var xhr = new XMLHttpRequest();
+      url = '/api/state/change/'
+
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', url, true);
+
+      xhr.onload = function () {
+         // Request finished. Do processing here.
+      };
+
+      xhr.send(checkboxValues);
+   }
+</script>
+
+
+
 {% extends 'base.html' %}
 {% block scripts %}
 {{ super() }}
 {{ datepicker.loader(theme="blitzer") }} {# to load jQuery-ui #}
 {{ datepicker.picker(id=".dp",dateFormat='yy-mm-dd') }}
 {% endblock %}
+{% block test %}
+   def
+{% endblock %}
 {% block title %} Search Results {% endblock %} {%
 block content %}
+
 <div class="main-container">
    <div class="search-result-wrapper">
        
       <div class="search-results-container" id="style-12">
          {% set count = namespace(value=0) %}
-         
+         {% set marker = [] %}
          {% if results is defined %}
 
          {% for article in results.items%}
+         {% set id = results.page ~ count.value %}
          <div class="article-wrapper">
+            
+            <div class="form-check">
+               <input class="form-check-input" type="checkbox" value="" id="{{id}}">
+               <label class="form-check-label" for="{{count.value}}">
+                 Default checkbox {{count.value}}
+               </label>
+             </div>
             <h3>{{article.title}}</h3>
             <h6>Source: {{article.source}}</h6>
             {% if article.description%}
@@ -60,7 +169,7 @@ block content %}
          <h2>Search results for:</h2>
          <br />
          <h3> "{{txt}}"          {% if startDate %}
-          between</br>
+          between</br>href="{{url_for('resetFilters')}}"
           {{startDate}} 
           and 
           {{endDate}}
@@ -87,13 +196,15 @@ block content %}
             </button>
          </form>
            <a type="button" class="btn btn-primary btn-lg"  href="{{url_for('resetFilters')}}"> Clear filters</a>
+           <a type="button" class="btn btn-primary btn-lg"  onclick="printChecked()"> GET CHECKED</a>
+           <a type="button" class="btn btn-primary btn-lg"  onclick="getCheckedAsString()"> DOWNLOAD CHECKED</a>
       </div>
       <!-- Pagination Links-->
       <div  div class="pagination-page-info">
          {% for page_num in results.iter_pages(left_edge=1, right_edge=2, left_current=1, right_current=2) %}
             {% if page_num %}
             {% if results.page == page_num %}
-            <a a href="{{ url_for('searchResults', page=page_num,txt=txt) }}"
+            <a a href="{{ url_for('searchResults', page=page_num,txt=txt,app=app) }}"
                class="btn btn-dark btn-lg">
                   {{ page_num }}
             </a>

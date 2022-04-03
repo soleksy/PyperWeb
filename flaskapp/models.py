@@ -37,6 +37,7 @@ class Article(db.Model):
     DOI = db.Column(db.String(120), unique=True, nullable=True)
     eprint = db.Column(db.String(120), unique=True,nullable=True)
     bibtex = db.Column(TextPickleType())
+    isSelected = db.Column(db.Boolean, unique=False, nullable=True)
     def __repr__(self):
         return '<Article %r>' % self.title
 
