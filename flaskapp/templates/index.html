@@ -3,7 +3,7 @@
 
 <script type="text/javascript">
   function setDefault() {
-    document.getElementById('searchInput').value = '{{text}}';
+    document.getElementById('searchInput').value = '{{searchQuery}}';
   }
 </script>
 {% endblock %}
@@ -16,8 +16,7 @@
       <input
         class="input-align"
         type="text"
-        placeholder="Search for scientific
-    articles"
+        placeholder="Search for scientific articles"
         aria-label="Search"
         name="searchText"
         id="searchInput"

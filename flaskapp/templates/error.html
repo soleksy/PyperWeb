@@ -1,12 +1,15 @@
 {% extends 'base.html' %} {% block content %}
 <div class="search-failed-wrapper">
   <h2>{{ error }}</h2>
-
   <a type="button" class="btn btn-primary btn-lg" href="/">
     Back to searchbar</a
   >
-  {% if searchURL %}
-  <a type="button" class="btn btn-primary btn-lg" href="{{searchURL}}">
+  {% if not toBeSearched %}
+  <a
+    type="button"
+    class="btn btn-primary btn-lg"
+    href="{{ url_for('searchResults',page=1,searchQuery=searchQuery) }}"
+  >
     Back to searchresults</a
   >
   {% endif %}

@@ -169,7 +169,7 @@ block content %}
          <h2>Search results for:</h2>
          <br />
          <h3> "{{searchQuery}}"          {% if startDate %}
-          between</br>href="{{url_for('resetFilters')}}"
+          between</br>
           {{startDate}} 
           and 
           {{endDate}}
@@ -204,7 +204,7 @@ block content %}
          {% for page_num in results.iter_pages(left_edge=1, right_edge=2, left_current=1, right_current=2) %}
             {% if page_num %}
             {% if results.page == page_num %}
-            <a a href="{{ url_for('searchResults', page=page_num,searchQuery=searchQuery) }}"
+            <a href="{{ url_for('searchResults', page=page_num,searchQuery=searchQuery) }}"
                class="btn btn-dark btn-lg">
                   {{ page_num }}
             </a>
