@@ -34,10 +34,10 @@ class Article(db.Model):
     journal = db.Column(db.String(120) , unique=False, nullable=True)
     volume = db.Column(db.Integer, unique=False,nullable = True)
     pages = db.Column(db.Integer, unique=False,nullable =True)
-    DOI = db.Column(db.String(120), unique=True, nullable=True)
-    eprint = db.Column(db.String(120), unique=True,nullable=True)
+    DOI = db.Column(db.String(120), unique=False, nullable=True)
+    eprint = db.Column(db.String(120), unique=False,nullable=True)
     bibtex = db.Column(TextPickleType())
-    isSelected = db.Column(db.Boolean, unique=False, nullable=True)
+    sessionID = db.Column(db.Integer, unique=False, nullable=False)
     def __repr__(self):
         return '<Article %r>' % self.title
 

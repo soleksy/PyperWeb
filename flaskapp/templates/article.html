@@ -57,7 +57,7 @@ function copyToClipboard(element) {
 
             {% if article.Eprint  %}
               <li class="list-group-item">
-              Eprint : <a href={{article['Eprint']}}>{{ article.eprint}} </a>
+              Eprint : <a href={{ article['Eprint'] }}>{{ article.eprint}} </a>
               </li>
             {% endif %}
 
@@ -84,7 +84,10 @@ function copyToClipboard(element) {
         </article>
       </div>
     </div>
-      <a type="button" class="btn btn-primary btn-lg"  href={{searchURL}}> Back to search results</a>
+
+
+
+      <a type="button" class="btn btn-primary btn-lg"  href="{{ url_for('searchResults',page=page,searchQuery=searchQuery,sessionID=sessionID) }}"> Back to search results</a>
   </div>
 
   <div class="container-row-40">

@@ -45,11 +45,10 @@
 
       var checkboxValues = JSON.parse(localStorage.getItem('checkboxValues')) || {};
       console.log(checkboxValues)
-      $('input:checkbox').each(function(){
-         if(checkboxValues[this.id] == true){
-            console.log(this.id)
-         }
-       });
+
+      for (const [key,value] of Object.entries(checkboxValues)){
+         console.log(key,value)
+      }
    }
 </script>
 
@@ -57,6 +56,7 @@
    function getCheckedAsString(){
       var checkboxValues = JSON.parse(localStorage.getItem('checkboxValues')) || {};
       var value = ""
+      
  
       $('input:checkbox').each(function(){
          if(checkboxValues[this.id] == true){
@@ -168,7 +168,7 @@ block content %}
          <article>
          <h2>Search results for:</h2>
          <br />
-         <h3> "{{txt}}"          {% if startDate %}
+         <h3> "{{searchQuery}}"          {% if startDate %}
           between</br>href="{{url_for('resetFilters')}}"
           {{startDate}} 
           and 
@@ -204,12 +204,12 @@ block content %}
          {% for page_num in results.iter_pages(left_edge=1, right_edge=2, left_current=1, right_current=2) %}
             {% if page_num %}
             {% if results.page == page_num %}
-            <a a href="{{ url_for('searchResults', page=page_num,txt=txt,app=app) }}"
+            <a a href="{{ url_for('searchResults', page=page_num,searchQuery=searchQuery) }}"
                class="btn btn-dark btn-lg">
                   {{ page_num }}
             </a>
             {% else %}
-               <a href="{{ url_for('searchResults',page=page_num,txt=txt) }}"
+               <a href="{{ url_for('searchResults', page=page_num,searchQuery=searchQuery) }}"
                   class="btn btn-outline-dark btn-lg">
                   {{ page_num }}
                </a>

@@ -1,7 +1,9 @@
+from re import search
 from flask import Flask , render_template ,redirect,url_for,request ,session
 from flaskapp import app, db
 from flaskapp.forms import InfoForm
 from flaskapp.models import Article
+from sqlalchemy import delete
 from .APIS.ARXIV.ArxivClasses import ArxivHelper,ArxivParser
 from .APIS.HEP.HepClasses import HepHelper ,  HepParser
 import asyncio , httpx
@@ -9,17 +11,13 @@ from .constants import SIZE , ITEMS_PER_PAGE
 from sqlalchemy import create_engine
 import sqlalchemy
 
+import threading
 
-articles = [] # stores list entities
-filteredArticleList = [] # stores articles post filters
-visibleArticles = [] # stores articles that are being displayed atm
+sem = threading.Semaphore()
 
-searchController = 0 # controlls whether the initial search was processed
-searched = False #?
-page = 0 # basic controlling attribute
-startDate = None # controlls the filters
-endDate = None # controlls the filters
 
+sessionID = 0
+sessionController = dict()
 
 
 def updateArticleList(listOfArticles):    
@@ -90,24 +88,24 @@ def checkTableExistance(tableName):
         return True
     else:
         return False
-    
-@app.route('/redirect/error' , methods=['GET','POST'])
-def errorPage():
-    error_msg = session.get('ERROR', None)
-    return render_template('error.html',error=error_msg)
-    
+
+
     
 @app.route('/' , methods=['GET' ,'POST'])
 def indexPage():
-    global searchController
+    global sessionID
+            
+    if not checkTableExistance("Article"):
+            db.create_all()
+            
     if request.method == "POST":
-        searchController = 1
-        text = request.form["searchText"]
         
-        if text == "":
-            text = " "
-            session['ERROR'] = "Apparently you have submited an empty query"
-            return redirect(url_for('errorPage'))
+        searchQuery = request.form["searchText"]
+        
+        
+        if searchQuery == "":
+            error = "Apparently you have submited an empty query"
+            return redirect(url_for('errorPage' , error=error))
         
             
         ARXIV = request.form.get('arxiv')
@@ -123,34 +121,52 @@ def indexPage():
             HEP = True
             
         if not (ARXIV or HEP):
-            session['ERROR'] = "You didn't select a database to process your query"
-            return redirect(url_for('errorPage'))
+            error =  "You didn't select a database to process your query"
+            return redirect(url_for('errorPage',error=error))
         
-        session['QUERYTEXT'] = text
+        sem.acquire()
+        if 'SESSION_ID' in session:
+            seshhh = int(session.get('SESSION_ID'))
+            articleess = Article.query.filter(Article.sessionID == seshhh)
+            articleess.delete()
+            db.session.commit()
+            
+            sessionID = sessionID + 1
+            session['SESSION_ID'] = sessionID 
+        else:
+            sessionID = sessionID + 1
+            session['SESSION_ID'] = sessionID 
+        sem.release()
+        
+        if 'SEARCH_QUERY' in session:
+            if session['SEARCH_QUERY'] != searchQuery:
+                session['SEARCH_QUERY'] == searchQuery
+                session['SEARCH'] = True
+            else:
+                session['SEARCH'] = False
+        else:
+            session['SEARCH_QUERY'] == searchQuery
+            session['SEARCH'] = True
+        
+        
         session['HEP'] = HEP
         session['ARXIV'] = ARXIV
-        session['FILTERS'] = False
+
         
-        return redirect(url_for('searchResults',txt=text,page=1))
+        return redirect(url_for('processData',searchQuery=searchQuery,page=1,sessionID=sessionID))
     else:
         text = session.get('QUERYTEXT' , " ")
         return render_template('index.html' , text=text)
     
-@app.route('/search_results/query<txt>' , methods=['GET' ,'POST'])
-async def searchResults(txt):
-
-    global searchController
-    global startDate
-    global endDate
     
-    global articles #original search
-    global filteredArticleList #post filter
-    global visibleArticles #articles being displayed
-    global searched
 
+@app.route('/process/data/query=<searchQuery>/<sessionID>')
+async def processData(searchQuery,sessionID):
+    
+    articles = []
     arxiv = session.get('ARXIV', None)
     hep = session.get('HEP', None)
-    filters = session.get('FILTERS' , None)
+
     arxivArticleList = []
     hepArticleList = []
     
@@ -159,69 +175,74 @@ async def searchResults(txt):
     index = 0
     form = InfoForm()
     
-    #1 IF SEARCH QUERY HAS TO BE PROCESSED BY APIS
-    if searchController == 1:
-        searchController = 0
+    startDate = None
+    endDate = None
         
-        searched = False
-        startDate = None
-        endDate = None
-        
-        if arxiv:
-            arxivHelper = ArxivHelper()
-            url = arxivHelper.allParamSearch(txt)
-            listOfApiCalls.append(retrieveData(url))
-                
-        if hep :
-            hepHelper = HepHelper()
-            url = hepHelper.hepUrlGenerator(txt)
-            listOfApiCalls.append(retrieveData(url))
+    if arxiv:
+        arxivHelper = ArxivHelper()
+        url = arxivHelper.allParamSearch(searchQuery)
+        listOfApiCalls.append(retrieveData(url))
+            
+    if hep:
+        hepHelper = HepHelper()
+        url = hepHelper.hepUrlGenerator(searchQuery)
+        listOfApiCalls.append(retrieveData(url))
 
-        async with httpx.AsyncClient() as client:
-            dbToSearch = await asyncio.gather(
-                *listOfApiCalls
-            )
-            await client.aclose()
+    async with httpx.AsyncClient() as client:
+        dbToSearch = await asyncio.gather(
+            *listOfApiCalls
+        )
+        await client.aclose()
 
-        if arxiv:
-            arxivParser = ArxivParser(dbToSearch[index].content)
-            arxivParser.standardizeXml()
-            arxivParser.parseXML()
-            arxivArticleList = arxivParser.ListOfArticles
-            index += 1
-        if hep:
-            hepParser = HepParser(dbToSearch[index].content)
-            hepParser.parseJsonFile()
-            hepArticleList = hepParser.ListOfArticles
-            index += 1
-
+    if arxiv:
+        arxivParser = ArxivParser(dbToSearch[index].content)
+        arxivParser.standardizeXml()
+        arxivParser.parseXML()
+        arxivArticleList = arxivParser.ListOfArticles
+        index += 1
+    if hep:
+        hepParser = HepParser(dbToSearch[index].content)
+        hepParser.parseJsonFile()
+        hepArticleList = hepParser.ListOfArticles
+        index += 1
         
     
-        updateArticleList(sortByDateDescending(filterArticles(hepArticleList + arxivArticleList)))
-        
-        if len(articles) == 0:
-            session['searchURL'] = None
-        else:
-            if checkTableExistance("Article"):
-                clearData(db.session)
-            else:
-                db.create_all()
-            
-            for article in articles:
-                db.session.add(Article(title=article.get('Title'), description=article.get('Summary'), source=article.get('DB')
-                                       ,firstAuthor=article.get('FirstAuthor'), yearPublished=article.get('Year'),
-                                       numberOfAuthors=article.get('AuthorCount'),journal=article.get('Journal'),
-                                       volume=article.get('Volume'),pages=article.get('Pages'),DOI=article.get('Doi'),
-                                       eprint=article.get('eprint'),bibtex=article.get('Bibtex'),isSelected=False))
-            db.session.commit()
-            session['searchURL'] = f"/search_results/query{txt}"
-            
-            page = request.args.get('page',1,type=int)
-            articles= Article.query.paginate(page=page,per_page=ITEMS_PER_PAGE)
-        return render_template('search_results.html' ,page=page,results=articles  ,txt=txt, form=form,startDate=startDate,endDate=endDate,searchURL=session.get('searchURL'))
-        
+    session['ARTICLES'] = (sortByDateDescending(filterArticles(hepArticleList + arxivArticleList)))
+    articles = session['ARTICLES']
     
-  
+    if len(articles) == 0:
+        session['ERROR'] = "No results for the submited query"
+        return redirect(url_for('errorPage'))
+    else:
+        if not checkTableExistance("Article"):
+            db.create_all()
+        
+        for article in articles:
+            db.session.add(Article(title=article.get('Title'), description=article.get('Summary'), source=article.get('DB')
+                                    ,firstAuthor=article.get('FirstAuthor'), yearPublished=article.get('Year'),
+                                    numberOfAuthors=article.get('AuthorCount'),journal=article.get('Journal'),
+                                    volume=article.get('Volume'),pages=article.get('Pages'),DOI=article.get('Doi'),
+                                    eprint=article.get('Eprint'),bibtex=article.get('Bibtex'),sessionID=sessionID))
+        db.session.commit()
+
+        page = request.args.get('page',1,type=int)
+        articles = Article.query.paginate(page=page,per_page=ITEMS_PER_PAGE)
+    return redirect (url_for('searchResults' ,page=page,results=articles ,searchQuery=searchQuery,form=form,startDate=startDate,endDate=endDate))
+    
+@app.route('/search_results/query=<searchQuery>' , methods=['GET' ,'POST'])
+def searchResults(searchQuery):
+    
+    page = request.args.get('page',1,type=int)
+    
+    localArticles = Article.query.filter(Article.sessionID==int(session['SESSION_ID'])).paginate(page=page,per_page=ITEMS_PER_PAGE)
+    
+    form = InfoForm()
+    #IF AN ARTICLE HAS BEEN CHOSEN
+    if request.method == "POST":
+        articleID = request.form.get("info")
+        page = request.args.get('page',1,type=int)
+        return redirect(url_for('articlePage',articleID=articleID,page=page,searchQuery=searchQuery))
+        
     #IF FILTERS WERE APPLIED
     elif form.validate_on_submit():
         session['FILTERS'] = True
@@ -232,36 +253,35 @@ async def searchResults(txt):
         startYear = int(form.startDate.data.strftime("%Y"))
         endYear = int(form.endDate.data.strftime("%Y"))
         
-        articles = Article.query.filter(Article.yearPublished<=endYear,Article.yearPublished>=startYear).paginate(page=1,per_page=ITEMS_PER_PAGE)
-        filteredArticleList = articles
-        
-        
+        session['FILTERED_ARTICLES'] = Article.query.filter(Article.yearPublished<=endYear,Article.yearPublished>=startYear).paginate(page=1,per_page=ITEMS_PER_PAGE)
+    
         if len(articles.items)  == 0:
             startDate = tempStartDate
             endDate = tempEndDate
-            return render_template('search_results.html' , txt=txt, results=articles , form=form,startDate=startDate,endDate=endDate,searchURL=session.get('searchURL'))
-        else:
-            searched = True
-            return render_template('search_results.html' ,results=articles,txt=txt, form=form,startDate=startDate,endDate=endDate,searchURL=session.get('searchURL'))
-    
-    #IF AN ARTICLE HAS BEEN CHOSEN
-    elif request.method == "POST":
-        articleID = request.form.get("info")
-        return redirect(url_for('articlePage',id = articleID))
+            return render_template('search_results.html' , searchQuery=searchQuery, results=localArticles,form=form,startDate=startDate,endDate=endDate)
+
+
     #SEARCH RESULT REFRESHED
     else:
         filters = session.get('FILTERS', None)
         if filters:            
-            return render_template('search_results.html' ,  results=filteredArticleList, txt=txt ,form=form,startDate=startDate,endDate=endDate,searchURL=session.get('searchURL'))
+            return render_template('search_results.html' ,  results=localArticles, searchQuery=searchQuery ,form=form,startDate=startDate,endDate=endDate)
         
-        if(searchController == 0):
+        
+        if session["SEARCH"] == False:
             startDate = None
             endDate = None
             
             page = request.args.get('page',1,type=int)
             articles = Article.query.paginate(page=page,per_page=ITEMS_PER_PAGE)
-            return render_template('search_results.html' ,results=articles  ,txt=txt, form=form,startDate=startDate,endDate=endDate,searchURL=session.get('searchURL'))
+            return render_template('search_results.html' ,results=localArticles  ,searchQuery=searchQuery, form=form,startDate=startDate,endDate=endDate)
+        else:
+            startDate = None
+            endDate = None
             
+            page = request.args.get('page',1,type=int)
+            articles = Article.query.paginate(page=page,per_page=ITEMS_PER_PAGE)
+            return render_template('search_results.html' ,results=localArticles  ,searchQuery=searchQuery, form=form,startDate=startDate,endDate=endDate)
 
 
 @app.route('/search_result/reset')
@@ -270,31 +290,35 @@ def resetFilters():
     text = session.get("QUERYTEXT" , None)
     
     return redirect(url_for('searchResults',txt=text,page=1,results=articles))
-@app.route('/search_results/<id>')
 
-def articlePage(id):
-    global articles
-    global filteredArticleList
-    global searched
-    filters = session.get('FILTERS', None)
+@app.route('/search_results/id=<articleID>/page=<page>')
+def articlePage(articleID,page):
+    page=int(page)
+    sessionID = int(session.get('SESSION_ID'))
+    localArticles = Article.query.filter(Article.sessionID==sessionID).paginate(page=page,per_page=ITEMS_PER_PAGE)
     
+    filters = session.get('FILTERS', None)
+    filteredArticleList = session.get('FILTERED_ARTICLES',None)
     if filters:
-        article = filteredArticleList.items[int(id)]
-        bibtex = filteredArticleList.items[int(id)].bibtex
+        article = filteredArticleList.items[int(articleID)]
+        bibtex = filteredArticleList.items[int(articleID)].bibtex
     else:
-        article = articles.items[int(id)]
-        bibtex = articles.items[int(id)].bibtex
+        article = localArticles.items[int(articleID)]
+        bibtex = localArticles.items[int(articleID)].bibtex
 
-    return render_template('article.html' , bibtex=bibtex, article=article ,searchURL=session.get('searchURL'),)
+    searchQuery = session['SEARCH_QUERY']
+    return render_template('article.html' , bibtex=bibtex, article=article , ArticleID=articleID, searchQuery=searchQuery, page=page)
 
 
 @app.route('/api/state/change/<parameter>' , methods=['GET' ,'POST'])
 def changeState(parameter):
     global articles
-    print(parameter)
-    
     return 200
     
 @app.route('/about')
 def about():
     return render_template('about.html')
+
+@app.route('/redirect/error<error>' , methods=['GET','POST'])
+def errorPage(error):
+    return render_template('error.html',error=error)
