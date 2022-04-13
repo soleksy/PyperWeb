@@ -27,58 +27,6 @@
 </script>
 
 
-
-<script>
-   function changeState(iterator){
-      var xhr = new XMLHttpRequest();
-      base = '/api/state/change/'
-      var url = base.concat(iterator)
-
-      console.log(url)
-      xhr.open('POST', url, true);
-      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-      xhr.onreadystatechange = function() { // Call a function when the state changes.
-         if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-             // Request finished. Do processing here.
-         }
-     }
-
-      xhr.send(iterator);
-
-   }
-</script>
-
-<script>
-   function printChecked(){
-
-      var checkboxValues = JSON.parse(localStorage.getItem('checkboxValues')) || {};
-      console.log(checkboxValues)
-
-      for (const [key,value] of Object.entries(checkboxValues)){
-         console.log(key,value)
-      }
-   }
-</script>
-
-<script>
-   function getCheckedAsString(){
-      var checkboxValues = JSON.parse(localStorage.getItem('checkboxValues')) || {};
-      var value = ""
-      
- 
-      $('input:checkbox').each(function(){
-         if(checkboxValues[this.id] == true){
-            value = value.concat(this.id)
-         }
-       });
-
-       console.log(value)
-   }
-
-</script>
-
-
 <script>
 
    var checkboxValues = JSON.parse(localStorage.getItem('checkboxValues')) || {};
@@ -99,21 +47,19 @@
 </script>
 
 <script>
-   function getChecked(){
-      var checkboxValues = JSON.parse(localStorage.getItem('checkboxValues')) || {};
+function uncheckAll(){
+   var $checkboxes = $('input:checkbox');
+   var checkboxValues = JSON.parse(localStorage.getItem('checkboxValues')) || {};
 
-      var xhr = new XMLHttpRequest();
-      url = '/api/state/change/'
 
-      var xhr = new XMLHttpRequest();
-      xhr.open('GET', url, true);
-
-      xhr.onload = function () {
-         // Request finished. Do processing here.
-      };
-
-      xhr.send(checkboxValues);
+   for (const [key,value] of Object.entries(checkboxValues)) {
+      checkboxValues[key] = false
    }
+
+   localStorage.setItem("checkboxValues", JSON.stringify(checkboxValues));
+
+
+}
 </script>
 
 <script>
@@ -121,22 +67,46 @@
 function httpPost(){
 
    var checkboxValues = JSON.parse(localStorage.getItem('checkboxValues')) || {};
-   var xhr = new XMLHttpRequest();
-   xhr.open("POST", '/api/state/change', true);
 
-   //Send the proper header information along with the request
-   xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-
-   xhr.onreadystatechange = function() { // Call a function when the state changes.
-    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-        console.log('ready')
-    }
-   }
-   xhr.send(JSON.stringify(checkboxValues));
-   // xhr.send(new Int8Array());
-   // xhr.send(document);
-
+   fetch('/api/state/change', {
+    body: JSON.stringify(checkboxValues),
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json; charset=utf-8'
+    },
+   })
+   .then(response => response.blob())
+   .then(response => {
+      const blob = new Blob([response], {type: 'application/file'});
+      const downloadUrl = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = downloadUrl;
+      a.download = "bibtex.txt";
+      document.body.appendChild(a);
+      a.click();
+})
 }
+
+</script>
+
+<script>
+   async function postData(url = '', data = {}) {
+ 
+  const response = await fetch(url, {
+    method: 'POST', 
+    mode: 'cors', 
+    cache: 'no-cache', 
+    credentials: 'same-origin', 
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+    body: JSON.stringify(data) 
+  });
+  return response.textContent;
+}
+
 
 </script>
 
@@ -187,7 +157,7 @@ block content %}
                   <label class="form-check-label" for="{{count.value}}">
                     <h5>Save to file</h5>
                   </label>
-                </div>
+               </div>
                {% set count.value = count.value + 1 %}
             </form>
          </div>
@@ -260,6 +230,7 @@ block content %}
       <div class="side-panel-wrapper3">
          <h5>Click the button below in order to download the information on all the selected articles in the form of BibTex. </h5>
          <a type="button" class="btn btn-success btn-lg"  onclick="httpPost()">DOWNLOAD</a>
+         <a type="button" class="btn btn-dark btn-sm"  onclick="uncheckAll()">UNCHECK ALL</a>
       </div>
 
 

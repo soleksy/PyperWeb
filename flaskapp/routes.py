@@ -1,5 +1,5 @@
 from re import search
-from flask import Flask , render_template ,redirect,url_for,request ,session , jsonify
+from flask import Flask , render_template ,redirect,url_for,request ,session , jsonify , send_file
 from flaskapp import app, db
 from flaskapp.forms import InfoForm
 from flaskapp.models import Article
@@ -10,8 +10,9 @@ import asyncio , httpx
 from .constants import SIZE , ITEMS_PER_PAGE 
 from sqlalchemy import create_engine
 import sqlalchemy
-
 import threading
+
+from starlette.background import BackgroundTasks
 
 sem = threading.Semaphore()
 sessionID = 0
@@ -80,6 +81,9 @@ def checkTableExistance(tableName):
         return True
     else:
         return False
+
+def remove_file(path: str) -> None:
+    os.unlink(path)
 
 
     
@@ -235,7 +239,7 @@ def searchResults(searchQuery):
         
     #IF FILTERS WERE APPLIED
     if form.validate_on_submit():
-        
+
         session['FILTERS'] = True
         
         session['START_DATE'] = form.startDate.data.strftime("%m/%d/%Y")
@@ -287,11 +291,13 @@ def resetFilters():
 @app.route('/search_results/id=<articleID>/page=<page>')
 def articlePage(articleID,page):
     page=int(page)
+    filters = session.get('FILTERS' , None)
     sessionID = int(session.get('SESSION_ID'))
     localArticles = Article.query.filter(Article.sessionID==sessionID).paginate(page=page,per_page=ITEMS_PER_PAGE)
     
-    filters = session.get('FILTERS', None)
-    filteredArticleList = Article.query.filter(Article.yearPublished>=int(session.get('START_YEAR')),Article.yearPublished<=int(session.get('END_YEAR')),Article.sessionID == int(session.get('SESSION_ID'))).paginate(page=1,per_page=ITEMS_PER_PAGE)
+    if filters:
+        filteredArticleList = Article.query.filter(Article.yearPublished>=int(session.get('START_YEAR')),Article.yearPublished<=int(session.get('END_YEAR')),Article.sessionID == int(session.get('SESSION_ID'))).paginate(page=1,per_page=ITEMS_PER_PAGE)
+
     if filters:
         article = filteredArticleList.items[int(articleID)]
         bibtex = filteredArticleList.items[int(articleID)].bibtex
@@ -304,30 +310,38 @@ def articlePage(articleID,page):
 
 
 @app.route('/api/state/change' , methods=['GET' ,'POST'])
-def getBibtex():
+async def getBibtex():
     
     sessionID = int(session.get('SESSION_ID'))
     localArticles = Article.query.filter(Article.sessionID==sessionID).all()
-    
+    listOfArticleIndexes = list()
+
     if request.method == 'POST':
         data = request.json
-        print(data)
+
+        fileString=""
         for article in localArticles:
             if data.get(str(article.id)) == True:
-                print(article.id)
-    
+                listOfArticleIndexes.append(article.id)
 
-        return '200'
+        print (listOfArticleIndexes)
+        for article in localArticles:
+            if article.id in listOfArticleIndexes:
+                for key in article.bibtex.keys():
+                    if key == list(article.bibtex.keys())[0]:
+                        fileString += str(article.bibtex[key]+",")
+                        fileString += ('\n')
+                    elif key != list(article.bibtex.keys())[-1]:
+                       fileString +=str(article.bibtex[key]+" },")
+                       fileString += ('\n')
+                    else:
+                        fileString += str(article.bibtex[key]+" },\n}")
+                        fileString += ('\n')
+                fileString+=('\n')
+
+        return fileString
     else:
-        data = request.json
-        
-        print(jsonify(data))
-        
-        obj = {
-            'pepela' : 2
-        }
-        
-        return obj
+        return '200'
     
 @app.route('/about')
 def about():
