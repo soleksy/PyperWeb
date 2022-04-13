@@ -1,5 +1,5 @@
 from re import search
-from flask import Flask , render_template ,redirect,url_for,request ,session
+from flask import Flask , render_template ,redirect,url_for,request ,session , jsonify
 from flaskapp import app, db
 from flaskapp.forms import InfoForm
 from flaskapp.models import Article
@@ -243,7 +243,7 @@ def searchResults(searchQuery):
         session['START_YEAR'] = int(form.startDate.data.strftime("%Y"))
         session['END_YEAR'] = int(form.endDate.data.strftime("%Y"))
               
-        filteredArticles = Article.query.filter(Article.yearPublished>=int(session.get('START_YEAR')),Article.yearPublished<=int(session.get('END_YEAR')),Article.sessionID == int(session.get('SESSION_ID'))).paginate(page=1,per_page=ITEMS_PER_PAGE)
+        filteredArticles = Article.query.filter(Article.yearPublished>=int(session.get('START_YEAR')),Article.yearPublished<=int(session.get('END_YEAR')),Article.sessionID == int(session.get('SESSION_ID'))).paginate(page=page,per_page=ITEMS_PER_PAGE)
     
         if len(filteredArticles.items) == 0:
             error = "No results for the submited date range"
@@ -262,7 +262,7 @@ def searchResults(searchQuery):
     else:
         filters = session.get('FILTERS', None)
         if filters:
-            filteredArticles = Article.query.filter(Article.yearPublished>=int(session.get('START_YEAR')),Article.yearPublished<=int(session.get('END_YEAR')),Article.sessionID == int(session.get('SESSION_ID'))).paginate(page=1,per_page=ITEMS_PER_PAGE) 
+            filteredArticles = Article.query.filter(Article.yearPublished>=int(session.get('START_YEAR')),Article.yearPublished<=int(session.get('END_YEAR')),Article.sessionID == int(session.get('SESSION_ID'))).paginate(page=page,per_page=ITEMS_PER_PAGE) 
             return render_template('search_results.html' ,  results=filteredArticles, searchQuery=searchQuery ,form=form,startDate= session['START_DATE'],endDate=session['END_DATE'])
         
         if session["SEARCH"] == False:
@@ -303,10 +303,31 @@ def articlePage(articleID,page):
     return render_template('article.html' , bibtex=bibtex, article=article , ArticleID=articleID, searchQuery=searchQuery, page=page)
 
 
-@app.route('/api/state/change/<parameter>' , methods=['GET' ,'POST'])
-def getBibtex(parameter):
-    print(parameter)
-    return 200
+@app.route('/api/state/change' , methods=['GET' ,'POST'])
+def getBibtex():
+    
+    sessionID = int(session.get('SESSION_ID'))
+    localArticles = Article.query.filter(Article.sessionID==sessionID).all()
+    
+    if request.method == 'POST':
+        data = request.json
+        print(data)
+        for article in localArticles:
+            if data.get(str(article.id)) == True:
+                print(article.id)
+    
+
+        return '200'
+    else:
+        data = request.json
+        
+        print(jsonify(data))
+        
+        obj = {
+            'pepela' : 2
+        }
+        
+        return obj
     
 @app.route('/about')
 def about():

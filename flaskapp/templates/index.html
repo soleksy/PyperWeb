@@ -6,6 +6,11 @@
     document.getElementById('searchInput').value = '{{searchQuery}}';
   }
 </script>
+<script>
+  function clearStorage() {
+    window.localStorage.clear();
+  }
+</script>
 {% endblock %}
 
 <body onload="setDefault()">
@@ -21,7 +26,14 @@
         name="searchText"
         id="searchInput"
       />
-      <button class="button-align" type="submit" value="submit">Search</button>
+      <button
+        class="button-align"
+        type="submit"
+        value="submit"
+        onclick="clearStorage()"
+      >
+        Search
+      </button>
       <input
         type="checkbox"
         class="btn-check"
