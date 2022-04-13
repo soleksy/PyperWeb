@@ -1,18 +1,14 @@
-from re import search
-from flask import Flask , render_template ,redirect,url_for,request ,session , jsonify , send_file
+from flask import render_template ,redirect,url_for,request ,session
 from flaskapp import app, db
 from flaskapp.forms import InfoForm
 from flaskapp.models import Article
-from sqlalchemy import delete
 from .APIS.ARXIV.ArxivClasses import ArxivHelper,ArxivParser
 from .APIS.HEP.HepClasses import HepHelper ,  HepParser
 import asyncio , httpx
-from .constants import SIZE , ITEMS_PER_PAGE 
+from .constants import  ITEMS_PER_PAGE 
 from sqlalchemy import create_engine
 import sqlalchemy
 import threading
-
-from starlette.background import BackgroundTasks
 
 sem = threading.Semaphore()
 sessionID = 0
