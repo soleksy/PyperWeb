@@ -78,10 +78,6 @@ def checkTableExistance(tableName):
     else:
         return False
 
-def remove_file(path: str) -> None:
-    os.unlink(path)
-
-
     
 @app.route('/' , methods=['GET' ,'POST'])
 def indexPage():
