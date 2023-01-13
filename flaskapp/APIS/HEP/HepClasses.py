@@ -221,8 +221,6 @@ class HepParser:
             singleArticle.clear()
 
     def convertToBibtex(self,article):
-
-
         singleBibtex = dict()
 
         if article.get('FirstAuthor') is None:

@@ -36,15 +36,33 @@ class PubMedHelper:
 
     def parse_article_info(self, xml_data):
         soup = BeautifulSoup(xml_data ,features="xml")
-        article_info = {}
-        article_info['title'] = soup.find('ArticleTitle').text
-        article_info['doi'] = soup.find('ELocationID', {'EIdType': 'doi'}).text
-        foreName = soup.find('AuthorList').find('ForeName').text
-        lastName = soup.find('AuthorList').find('LastName').text
-        article_info['first_author'] = foreName + ' ' + lastName
-        article_info['journal_title'] = soup.find('Title').text
-        article_info['year_published'] = soup.find('Year').text
-        return article_info
+        articles_info = []
+        for i , article in enumerate(soup.find_all('PubmedArticle')):
+            article_info = {}
+            if article.find('ArticleTitle') is not None:
+                article_info['title'] = article.find('ArticleTitle').text
+
+            if article.find('ElocationID') is not None:
+                article_info['doi'] = article.find('ElocationID').text
+            if article.find('AuthorList').find('ForeName') is not None:
+                foreName = article.find('AuthorList').find('ForeName').text
+            else:
+                foreName = ''
+            
+            if article.find('AuthorList').find('LastName') is not None:
+                lastName = article.find('AuthorList').find('LastName').text
+            else:
+                lastName = ''
+
+            article_info['first_author'] = foreName + ' ' + lastName
+
+            if article.find('Title') is not None:
+                article_info['journal_title'] = article.find('Title').text
+            if article.find('Year') is not None:
+                article_info['year_published'] = article.find('Year').text
+                
+            articles_info.append(article_info)
+        return articles_info
 
 def main():
     Helper = PubMedHelper()
@@ -60,8 +78,9 @@ def main():
     Helper.apiToFile(response, 'articles.json', 'xml')
 
     # Parse articles info
-    article_info = Helper.parse_article_info(response)
-    print(article_info)
+    articles_info = Helper.parse_article_info(response)
+    for article in articles_info:
+        print(article.get('title'))
 
 if __name__ == "__main__":
     main()

@@ -1,2 +1,48 @@
 {% extends 'base.html' %} {% block title %} About {% endblock %} {% block
-content %}this is the about page {% endblock %}
+content %}
+<l> 
+    <h1> About </h1>
+    <style>
+        h1 {
+            font-size: 40px;
+            
+        }
+        p {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        l {
+            font-size: 20px;
+            text-align: center;
+        }
+        .left-aligned {
+            text-align: center;
+        }
+        </style>
+    <p> This is a simple web application that allows you to search for
+    publications in the <l></p>
+        <div class="left-aligned">
+
+        
+        <li>
+             <a
+            href="https://inspirehep.net/">InspireHEP</a>
+        </li>
+        <li>
+            <a
+            href="https://arxiv.org/">Arxiv</a>
+        </li>
+        <li>
+            
+            <a
+            href="https://pubmed.ncbi.nlm.nih.gov/">Pubmed</a>
+    </l>
+        </div>
+    </br>
+    <p> The application is written in Python3 using the <a
+    href="https://flask.palletsprojects.com/en/1.1.x/">Flask</a> web
+    framework. </p>
+    <p> The source code is available on <a
+    href="https://github.com/soleksy/PyperWeb">Github</a>. </p>
+</l>
+{% endblock %}
