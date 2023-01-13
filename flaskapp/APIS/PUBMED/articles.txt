@@ -1,660 +1,673 @@
-@article{ Johanna A Thunell:2023 }
-author = { Johanna A Thunell }
-title = { COVID-19 hospitalization and mortality in community-dwelling racially and ethnically diverse persons living with dementia. }
+@article{ Shota Ichikawa:2023 }
+author = { Shota Ichikawa }
+title = { Prediction of body weight from chest radiographs using deep learning with a convolutional neural network. }
 year = { 2023 }
-journal = { Journal of the American Geriatrics Society }
+journal = { Radiological physics and technology }
 
-@article{ Sabitha Sasidharan Pillai:2023 }
-author = { Sabitha Sasidharan Pillai }
-title = { Incidence, Severity, and Presentation of Type 2 Diabetes in Youth During the First and Second Year of the COVID-19 Pandemic. }
+@article{ Andy Tsai:2023 }
+author = { Andy Tsai }
+title = { Dating birth-related clavicular fractures: pediatric radiologists versus artificial intelligence. }
 year = { 2023 }
-journal = { Diabetes care }
+journal = { Pediatric radiology }
 
-@article{ Sara Consilia Papavero:2023 }
-author = { Sara Consilia Papavero }
-title = { Telemedicine Has a Social Impact: An Italian National Study for the Evaluation of the Cost-Opportunity for Patients and Caregivers and the Measurement of Carbon Emission Savings. }
+@article{ Mohammad Mahdi Shiraz Bhurwani:2023 }
+author = { Mohammad Mahdi Shiraz Bhurwani }
+title = { Identification of infarct core and ischemic penumbra using computed tomography perfusion and deep learning. }
 year = { 2023 }
-journal = { Telemedicine journal and e-health : the official journal of the American Telemedicine Association }
-
-@article{ Medha R Cherabuddi:2023 }
-author = { Medha R Cherabuddi }
-title = { Disparities in Use of Virtual Primary Care During the Early COVID-19 Pandemic. }
-year = { 2023 }
-journal = { Telemedicine journal and e-health : the official journal of the American Telemedicine Association }
-
-@article{ Audrey A Keim:2023 }
-author = { Audrey A Keim }
-title = { Women Authorship Trends in the Highest-Impact Anesthesiology Journals from 2005 to 2021. }
-year = { 2023 }
-journal = { Journal of women's health (2002) }
-
-@article{ Lynne Cotter:2023 }
-author = { Lynne Cotter }
-title = { Increased Alcohol-Related Mortality in Wisconsin Pre-COVID: A Two-Decade Trend. }
-year = { 2023 }
-journal = { WMJ : official publication of the State Medical Society of Wisconsin }
-volume = { 121 }
-
-@article{ Blanca Álvarez-Del Río:2023 }
-author = { Blanca Álvarez-Del Río }
-title = { Economic Burden of the 2020 COVID-19 Hospitalizations in Spain. }
-year = { 2023 }
-journal = { JAMA network open }
-volume = { 6 }
-
-@article{ Adana A M Llanos:2023 }
-author = { Adana A M Llanos }
-title = { Evaluation of Inequities in Cancer Treatment Delay or Discontinuation Following SARS-CoV-2 Infection. }
-year = { 2023 }
-journal = { JAMA network open }
-volume = { 6 }
-
-@article{ Auliasari Meita Utami:2023 }
-author = { Auliasari Meita Utami }
-title = { Economic evaluation of COVID-19 vaccination: A systematic review. }
-year = { 2023 }
-journal = { Journal of global health }
-volume = { 13 }
-
-@article{ Feras Hawari:2023 }
-author = { Feras Hawari }
-title = { Safety, Tolerability, and Pharmacokinetics of Nebulized Hydroxychloroquine: A Pilot Study in Healthy Volunteers. }
-year = { 2023 }
-journal = { Journal of aerosol medicine and pulmonary drug delivery }
-
-@article{ Luca Colangeli:2023 }
-author = { Luca Colangeli }
-title = { Effects of COVID-19 vaccination on clinical outcomes in patients hospitalized in Internal Medicine during Omicron variant spreading. }
-year = { 2023 }
-journal = { Internal and emergency medicine }
-
-@article{ Abdulsamet Erden:2023 }
-author = { Abdulsamet Erden }
-title = { Mortality in psoriatic arthritis patients, changes over time, and the impact of COVID-19: results from a multicenter Psoriatic Arthritis Registry (PsART-ID). }
-year = { 2023 }
-journal = { Clinical rheumatology }
-
-@article{ Geraldine Tong Zamora-Abrahan:2023 }
-author = { Geraldine Tong Zamora-Abrahan }
-title = { Outcomes of Filipinos with inflammatory rheumatic diseases developing COVID-19 prior to vaccinations and new variants: a historical perspective. }
-year = { 2023 }
-journal = { Clinical rheumatology }
-
-@article{ Bingya Ma:2023 }
-author = { Bingya Ma }
-title = { Racial Disparities in the Clinical Prognosis of Gastrointestinal Cancer Patients with COVID-19: a Retrospective Study in UC CORDS. }
-year = { 2023 }
-journal = { Journal of racial and ethnic health disparities }
-
-@article{ Lihong Zhao:2023 }
-author = { Lihong Zhao }
-title = { Modeling and Global Sensitivity Analysis of Strategies to Mitigate Covid-19 Transmission on a Structured College Campus. }
-year = { 2023 }
-journal = { Bulletin of mathematical biology }
-volume = { 85 }
-
-@article{ Carlos Velasco-Benitez:2023 }
-author = { Carlos Velasco-Benitez }
-title = { Efficacy of transcutaneous posterior tibial nerve stimulation in functional constipation. }
-year = { 2023 }
-journal = { European journal of pediatrics }
-
-@article{ Jiram Torres-Ruiz:2023 }
-author = { Jiram Torres-Ruiz }
-title = { Novel clinical and immunological features associated with persistent post-acute sequelae of COVID-19 after six months of follow-up: a pilot study. }
-year = { 2023 }
-journal = { Infectious diseases (London, England) }
-
-@article{ Tamara G Fong:2023 }
-author = { Tamara G Fong }
-title = { The Modified and Extended Hospital Elder Life Program: A remote model of care to expand delirium prevention. }
-year = { 2023 }
-journal = { Journal of the American Geriatrics Society }
-
-@article{ Orlando Javier Flórez-Victoria:2023 }
-author = { Orlando Javier Flórez-Victoria }
-title = { [Not Available]. }
-year = { 2023 }
-journal = { Revista colombiana de obstetricia y ginecologia }
-volume = { 73 }
-
-@article{ Carly A Busch:2023 }
-author = { Carly A Busch }
-title = { Costs and Benefits of Undergraduates Revealing Depression to Online Science Instructors. }
-year = { 2023 }
-journal = { CBE life sciences education }
-volume = { 22 }
-
-@article{ Catarina Amaral Marques:2023 }
-author = { Catarina Amaral Marques }
-title = { Acute myocardial infarction during late COVID-19 era: patient characteristics, presentation and outcomes. }
-year = { 2023 }
-journal = { Monaldi archives for chest disease = Archivio Monaldi per le malattie del torace }
-
-@article{ Helen J von Richthofen:2023 }
-author = { Helen J von Richthofen }
-title = { Soluble Signal Inhibitory Receptor on Leukocytes-1 Is Released from Activated Neutrophils by Proteinase 3 Cleavage. }
-year = { 2023 }
-journal = { Journal of immunology (Baltimore, Md. : 1950) }
-
-@article{ Clancy Mulholland:2023 }
-author = { Clancy Mulholland }
-title = { Same day discharge for robot-assisted radical prostatectomy: a prospective cohort study documenting an Australian approach. }
-year = { 2023 }
-journal = { ANZ journal of surgery }
-
-@article{ Deborah J Griffiths-Jones:2023 }
-author = { Deborah J Griffiths-Jones }
-title = { A Phase II randomised controlled trial of oral prednisolone in early diffuse cutaneous systemic sclerosis (PRedSS). }
-year = { 2023 }
-journal = { Rheumatology (Oxford, England) }
-
-@article{ V Fabbri:2023 }
-author = { V Fabbri }
-title = { Skin Atrophy after diagnostic tests with corticosteroids for the diagnosis of SARS-CoV-2 vaccine excipients hypersensitivity. }
-year = { 2023 }
-journal = { European annals of allergy and clinical immunology }
-
-@article{ Kumutnart Chanprapaph:2023 }
-author = { Kumutnart Chanprapaph }
-title = { A real-world prospective cohort study of immunogenicity and reactogenicity of ChAdOx1-S[recombinant] among patients with immune-mediated dermatological diseases. }
-year = { 2023 }
-journal = { The British journal of dermatology }
-
-@article{ María Irigoyen-Otiñano:2023 }
-author = { María Irigoyen-Otiñano }
-title = { Psychiatric Emergencies and Suicide Attempts Before and During COVID-19 Lockdown in Spain. }
-year = { 2023 }
-journal = { Crisis }
-
-@article{ Katie Attwell:2023 }
-author = { Katie Attwell }
-title = { Parents' COVID-19 vaccine intentions for children under 5 years: Brief reflections from a qualitative study. }
-year = { 2023 }
-journal = { Journal of paediatrics and child health }
-
-@article{ Maggie Rogers:2023 }
-author = { Maggie Rogers }
-title = { Perceptions of Palliative Care Program Viability During the Pandemic: Qualitative Results From a National Survey. }
-year = { 2023 }
-journal = { The American journal of hospice & palliative care }
-
-@article{ Emilia Morawiec:2023 }
-author = { Emilia Morawiec }
-title = { A Retrospective Population Study of 385 191 Positive Real-Time Reverse Transcription-Polymerase Chain Reaction Tests For SARS-CoV-2 from a Single Laboratory in Katowice, Poland from April 2020 to July 2022. }
-year = { 2023 }
-journal = { Medical science monitor : international medical journal of experimental and clinical research }
-volume = { 29 }
-
-@article{ D V Gavrilov:2023 }
-author = { D V Gavrilov }
-title = { [Case of peripartum cardiomyopathy misdiagnosed as pulmonary changes due to COVID-19]. }
-year = { 2023 }
-journal = { Kardiologiia }
-volume = { 62 }
-
-@article{ Gregory Pavlovich Arutyunov:2023 }
-author = { Gregory Pavlovich Arutyunov }
-title = { [Not Available]. }
-year = { 2023 }
-journal = { Kardiologiia }
-volume = { 62 }
-
-@article{ I V Kovtyukh:2023 }
-author = { I V Kovtyukh }
-title = { Electrocardiogram QRS Complex Duration as a Predictor of Hospital Prognosis in Patients With COVID-19. }
-year = { 2023 }
-journal = { Kardiologiia }
-volume = { 62 }
-
-@article{ A A Ageev:2023 }
-author = { A A Ageev }
-title = { The Effect of COVID-19 on Long-Term Cardiac Function in Patients With Chronic Heart Failure. }
-year = { 2023 }
-journal = { Kardiologiia }
-volume = { 62 }
-
-@article{ V Yu Mareev:2023 }
-author = { V Yu Mareev }
-title = { Proactive anti-inflammatory therapy in the advanced stages of a new coronavirus infection. Main results of the inpatient phase of the COLORIT study (Colchicin vs. Ruxolitinib and secukinumab in an open, prospective, randomized trial in patients with novel coronavirus infection COVID-19). }
-year = { 2023 }
-journal = { Kardiologiia }
-volume = { 62 }
-
-@article{ Giacomo Brisca:2023 }
-author = { Giacomo Brisca }
-title = { How has the SARS-CoV-2 pandemic changed the epidemiology and management of acute bronchiolitis? }
-year = { 2023 }
-journal = { Pediatric pulmonology }
-
-@article{ Cecilia Bonazzetti:2023 }
-author = { Cecilia Bonazzetti }
-title = { Relationship between immune response to SARS-CoV2 vaccines and development of breakthrough infection in solid organ transplant recipients: the CONTRAST cohort. }
-year = { 2023 }
-journal = { Clinical infectious diseases : an official publication of the Infectious Diseases Society of America }
-
-@article{ Roberto Carnevale:2023 }
-author = { Roberto Carnevale }
-title = { Toll-Like Receptor 4-Dependent Platelet-Related Thrombosis in SARS-CoV-2 Infection. }
-year = { 2023 }
-journal = { Circulation research }
-
-@article{ Sören Kliem:2023 }
-author = { Sören Kliem }
-title = { The Effect of the Covid-19 Pandemic on Domestic Violence in Germany: A Comparison of Three Representative Population Surveys. }
-year = { 2023 }
-journal = { Journal of interpersonal violence }
-
-@article{ Kaina Marie Clare Sera Jose:2023 }
-author = { Kaina Marie Clare Sera Jose }
-title = { Bereaved in Me: Understanding the Vicarious Grief Experiences Among Helping Professionals During the COVID-19 Pandemic. }
-year = { 2023 }
-journal = { Omega }
-
-@article{ M Murat Civaner:2023 }
-author = { M Murat Civaner }
-title = { [How to Defend Mandatory Immunization Against Vaccine Hesitancy and Vaccine Refusal? An Ethical Assessment]. }
-year = { 2023 }
-journal = { Mikrobiyoloji bulteni }
-volume = { 57 }
-
-@article{ Berna Yılmaz:2023 }
-author = { Berna Yılmaz }
-title = { [Evaluation of the Effects of Tocilizumab Use on Oxygen Parameters, Inflammatory Markers and Survival in Patients Diagnosed with COVID-19 in Intensive Care Unit]. }
-year = { 2023 }
-journal = { Mikrobiyoloji bulteni }
-volume = { 57 }
-
-@article{ Asuman Demirbuğa:2023 }
-author = { Asuman Demirbuğa }
-title = { [Long COVID in Children: A Pediatric Center Experience]. }
-year = { 2023 }
-journal = { Mikrobiyoloji bulteni }
-volume = { 57 }
-
-@article{ Leszek Kukulski:2023 }
-author = { Leszek Kukulski }
-title = { Spontaneous dissection of the superior mesenteric artery related to COVID-19. }
-year = { 2023 }
-journal = { VASA. Zeitschrift fur Gefasskrankheiten }
-
-@article{ Farheen Naz:2023 }
-author = { Farheen Naz }
-title = { Investigation of the interactions of HSA and SARS-CoV-2 papain-like protease against eugenol for novel COVID-19 drug discovery: spectroscopic and insilico study. }
-year = { 2023 }
-journal = { Journal of biomolecular structure & dynamics }
-
-@article{ Chisa Nakashima:2023 }
-author = { Chisa Nakashima }
-title = { Cutaneous manifestations of COVID-19 and COVID-19 vaccination. }
-year = { 2023 }
-journal = { The Journal of dermatology }
-
-@article{ Oscar M P Jolobe:2023 }
-author = { Oscar M P Jolobe }
-title = { Regarding: The long and winding road of COVID-19 in survivors of hospitalization. }
-year = { 2023 }
-journal = { Journal of internal medicine }
-
-@article{ Annette Erlangsen:2023 }
-author = { Annette Erlangsen }
-title = { Association between SARS-CoV-2 infection and self-harm: Danish nationwide register-based cohort study. }
-year = { 2023 }
-journal = { The British journal of psychiatry : the journal of mental science }
-
-@article{ Lorraine S Kasaven:2023 }
-author = { Lorraine S Kasaven }
-title = { The impact of the COVID-19 pandemic on perinatal services and maternal mental health in the UK. }
-year = { 2023 }
-journal = { BJPsych open }
-volume = { 9 }
-
-@article{ Tolulope F Olufunlayo:2023 }
-author = { Tolulope F Olufunlayo }
-title = { Telemedicine ready or not? A cross-sectional assessment of telemedicine maturity of federally funded tertiary health institutions in Nigeria. }
-year = { 2023 }
-journal = { Digital health }
-volume = { 9 }
-
-@article{ Ahmad N Alzubaidi:2023 }
-author = { Ahmad N Alzubaidi }
-title = { The state of telehealth: 2 years into the COVID-19 pandemic - back to business as usual? }
-year = { 2023 }
-journal = { American journal of clinical and experimental urology }
+journal = { Journal of medical imaging (Bellingham, Wash.) }
 volume = { 10 }
 
-@article{ Jianwei Guo:2023 }
-author = { Jianwei Guo }
-title = { Necessity and challenges for the post-pandemic Hangzhou Asian Games: An interdisciplinary data science assessment. }
+@article{ Yen-Yu Lin:2023 }
+author = { Yen-Yu Lin }
+title = { Application of artificial intelligence to stereotactic radiosurgery for intracranial lesions: detection, segmentation, and outcome prediction. }
 year = { 2023 }
-journal = { Frontiers in psychology }
-volume = { 13 }
+journal = { Journal of neuro-oncology }
 
-@article{ Roberto W Dal Negro:2023 }
-author = { Roberto W Dal Negro }
-title = { Nebivolol: an effective option against long-lasting dyspnoea following COVID-19 pneumonia - a pivotal double-blind, cross-over controlled study. }
+@article{ Ben Luijten:2023 }
+author = { Ben Luijten }
+title = { Ultrasound Signal Processing: From Models to Deep Learning. }
 year = { 2023 }
-journal = { Multidisciplinary respiratory medicine }
-volume = { 17 }
+journal = { Ultrasound in medicine & biology }
 
-@article{ Eibhlin Goggins:2023 }
-author = { Eibhlin Goggins }
-title = { SARS-CoV-2 booster effect and waning immunity in hemodialysis patients: A cohort study. }
+@article{ Peter G Mikhael:2023 }
+author = { Peter G Mikhael }
+title = { Sybil: A Validated Deep Learning Model to Predict Future Lung Cancer Risk From a Single Low-Dose Chest Computed Tomography. }
 year = { 2023 }
-journal = { Health science reports }
-volume = { 6 }
+journal = { Journal of clinical oncology : official journal of the American Society of Clinical Oncology }
 
-@article{ Don E Willis:2023 }
-author = { Don E Willis }
-title = { COVID-19 and food insecurity in a vulnerable rural state. }
+@article{ Palwinder Kaur:2023 }
+author = { Palwinder Kaur }
+title = { Review of Progress in Diagnostic Studies of Autism Spectrum Disorder Using Neuroimaging. }
 year = { 2023 }
-journal = { Dialogues in health }
-volume = { 1 }
+journal = { Interdisciplinary sciences, computational life sciences }
 
-@article{ Priyanka Sharma:2023 }
-author = { Priyanka Sharma }
-title = { Contextualization of the trends in number of beneficiaries vaccinated at a COVID-19 vaccination centre in Delhi, India. }
+@article{ Yan-Ran Joyce Wang:2023 }
+author = { Yan-Ran Joyce Wang }
+title = { Low-count whole-body PET/MRI restoration: an evaluation of dose reduction spectrum and five state-of-the-art artificial intelligence models. }
 year = { 2023 }
-journal = { Dialogues in health }
-volume = { 1 }
+journal = { European journal of nuclear medicine and molecular imaging }
 
-@article{ Pilar Giraldo:2023 }
-author = { Pilar Giraldo }
-title = { Recommendations on the follow-up of patients with Gaucher disease in Spain: Results from a Delphi survey. }
+@article{ Lei Guo:2023 }
+author = { Lei Guo }
+title = { Divide and Conquer: A Flexible Deep Learning Strategy for Exploring Metabolic Heterogeneity from Mass Spectrometry Imaging Data. }
 year = { 2023 }
-journal = { JIMD reports }
-volume = { 64 }
+journal = { Analytical chemistry }
 
-@article{ Gui-Ying Dong:2023 }
-author = { Gui-Ying Dong }
-title = { Exploratory COVID-19 death risk score based on basic laboratory tests and physiological clinical measurements. }
+@article{ Haijun Xu:2023 }
+author = { Haijun Xu }
+title = { Automatic detection of pulmonary embolism in computed tomography pulmonary angiography using scaled-YOLOv4. }
 year = { 2023 }
-journal = { World journal of emergency medicine }
-volume = { 13 }
+journal = { Medical physics }
 
-@article{ Peng-da Han:2023 }
-author = { Peng-da Han }
-title = { Medical services for sports injuries and illnesses in the Beijing 2022 Olympic Winter Games. }
+@article{ Xin Zhang:2023 }
+author = { Xin Zhang }
+title = { Machine learning in 3D auto-filling alveolar cleft of CT images to assess the influence of alveolar bone grafting on the development of maxilla. }
 year = { 2023 }
-journal = { World journal of emergency medicine }
-volume = { 13 }
+journal = { BMC oral health }
+volume = { 23 }
 
-@article{ Shota Nakao:2023 }
-author = { Shota Nakao }
-title = { Impact of coronavirus disease 2019 on the mortality of patients who received emergency transportation: a population-based cross-sectional study. }
+@article{ Ungureanu Anda:2023 }
+author = { Ungureanu Anda }
+title = { Learning deep architectures for the interpretation of first-trimester fetal echocardiography (LIFE) - a study protocol for developing an automated intelligent decision support system for early fetal echocardiography. }
 year = { 2023 }
-journal = { Acute medicine & surgery }
-volume = { 10 }
+journal = { BMC pregnancy and childbirth }
+volume = { 23 }
 
-@article{ Lujain Alassaf:2023 }
-author = { Lujain Alassaf }
-title = { Community-Based Seroprevelance of SARS-CoV-2 in Saudi Arabia. }
+@article{ Yang Zhang:2023 }
+author = { Yang Zhang }
+title = { Deep Learning-based Automatic Diagnosis of Breast Cancer on MRI Using Mask R-CNN for Detection Followed by ResNet50 for Classification. }
 year = { 2023 }
-journal = { Cureus }
+journal = { Academic radiology }
+
+@article{ William V Wagstaff:2023 }
+author = { William V Wagstaff }
+title = { Using Deep Learning to Predict Treatment Response in Patients with Hepatocellular Carcinoma Treated with Y90 Radiation Segmentectomy. }
+year = { 2023 }
+journal = { Journal of digital imaging }
+
+@article{ Quan-Hao He:2023 }
+author = { Quan-Hao He }
+title = { Deep learning and radiomic feature-based blending ensemble classifier for malignancy risk prediction in cystic renal lesions. }
+year = { 2023 }
+journal = { Insights into imaging }
 volume = { 14 }
 
-@article{ Shin Sugasawa:2023 }
-author = { Shin Sugasawa }
-title = { Two Cases of Rare Intratumoral Hemorrhage Following COVID-19 Vaccination. }
+@article{ Mads Sloth Vinding:2023 }
+author = { Mads Sloth Vinding }
+title = { Clipped DeepControl: Deep neural network two-dimensional pulse design with an amplitude constraint layer. }
 year = { 2023 }
-journal = { Cureus }
-volume = { 14 }
+journal = { Artificial intelligence in medicine }
+volume = { 135 }
 
-@article{ Francisco Javier Alvarez-Rubio:2023 }
-author = { Francisco Javier Alvarez-Rubio }
-title = { Bullous Pilomatrixoma After COVID-19 Vaccination. }
+@article{ Tingting Dan:2023 }
+author = { Tingting Dan }
+title = { DeepGA for automatically estimating fetal gestational age through ultrasound imaging. }
 year = { 2023 }
-journal = { Cureus }
-volume = { 14 }
+journal = { Artificial intelligence in medicine }
+volume = { 135 }
 
-@article{ Naif Alhussein:2023 }
-author = { Naif Alhussein }
-title = { The Effect of the COVID-19 Lockdown on the Frequency of Acute Poisoning Presentation to Adult and Pediatric Emergency Departments. }
+@article{ Yean Zhu:2023 }
+author = { Yean Zhu }
+title = { A hand motion capture method based on infrared thermography for measuring fine motor skills in biomedicine. }
 year = { 2023 }
-journal = { Cureus }
+journal = { Artificial intelligence in medicine }
+volume = { 135 }
+
+@article{ Ilkay Yildiz Potter:2023 }
+author = { Ilkay Yildiz Potter }
+title = { Automated Bone Tumor Segmentation and Classification as Benign or Malignant Using Computed Tomographic Imaging. }
+year = { 2023 }
+journal = { Journal of digital imaging }
+
+@article{ Maximilian Neidhardt:2023 }
+author = { Maximilian Neidhardt }
+title = { Optical force estimation for interactions between tool and soft tissues. }
+year = { 2023 }
+journal = { Scientific reports }
+volume = { 13 }
+
+@article{ Francesco Mercaldo:2023 }
+author = { Francesco Mercaldo }
+title = { Coronavirus covid-19 detection by means of explainable deep learning. }
+year = { 2023 }
+journal = { Scientific reports }
+volume = { 13 }
+
+@article{ Jianjun Yan:2023 }
+author = { Jianjun Yan }
+title = { Tongue crack recognition using segmentation based deep learning. }
+year = { 2023 }
+journal = { Scientific reports }
+volume = { 13 }
+
+@article{ Fabian A Braeu:2023 }
+author = { Fabian A Braeu }
+title = { AI-based clinical assessment of optic nerve head robustness superseding biomechanical testing. }
+year = { 2023 }
+journal = { The British journal of ophthalmology }
+
+@article{ T Weikert:2023 }
+author = { T Weikert }
+title = { Automated lung cancer assessment on 18F-PET/CT using Retina U-Net and anatomical region segmentation. }
+year = { 2023 }
+journal = { European radiology }
+
+@article{ Md Inzamam Ul Haque:2023 }
+author = { Md Inzamam Ul Haque }
+title = { Deep Learning on Multimodal Chemical and Whole Slide Imaging Data for Predicting Prostate Cancer Directly from Tissue Images. }
+year = { 2023 }
+journal = { Journal of the American Society for Mass Spectrometry }
+
+@article{ Hiroyuki Akai:2023 }
+author = { Hiroyuki Akai }
+title = { Acceleration of knee magnetic resonance imaging using a combination of compressed sensing and commercially available deep learning reconstruction: a preliminary study. }
+year = { 2023 }
+journal = { BMC medical imaging }
+volume = { 23 }
+
+@article{ Danupong Buttongkum:2023 }
+author = { Danupong Buttongkum }
+title = { 3D reconstruction of proximal femoral fracture from biplanar radiographs with fractural representative learning. }
+year = { 2023 }
+journal = { Scientific reports }
+volume = { 13 }
+
+@article{ Jing Wang:2023 }
+author = { Jing Wang }
+title = { Cross-convolutional transformer for automated multi-organs segmentation in a variety of medical images. }
+year = { 2023 }
+journal = { Physics in medicine and biology }
+
+@article{ Huaying Liu:2023 }
+author = { Huaying Liu }
+title = { Topologically preserved registration of 3D CT images with deep networks. }
+year = { 2023 }
+journal = { Physics in medicine and biology }
+
+@article{ S Deepa:2023 }
+author = { S Deepa }
+title = { Hybrid Optimization Algorithm Enabled Deep Learning Approach Brain Tumor Segmentation and Classification Using MRI. }
+year = { 2023 }
+journal = { Journal of digital imaging }
+
+@article{ Issei Shinohara:2023 }
+author = { Issei Shinohara }
+title = { Degree of Accuracy With Which Deep Learning for Ultrasound Images Identifies Osteochondritis Dissecans of the Humeral Capitellum. }
+year = { 2023 }
+journal = { The American journal of sports medicine }
+
+@article{ Diana M Marin-Castrillon:2023 }
+author = { Diana M Marin-Castrillon }
+title = { 4D segmentation of the thoracic aorta from 4D flow MRI using deep learning. }
+year = { 2023 }
+journal = { Magnetic resonance imaging }
+
+@article{ Sanjay Saxena:2023 }
+author = { Sanjay Saxena }
+title = { Fused deep learning paradigm for the prediction of o6-methylguanine-DNA methyltransferase genotype in glioblastoma patients: A neuro-oncological investigation. }
+year = { 2023 }
+journal = { Computers in biology and medicine }
+volume = { 153 }
+
+@article{ Yangye Yan:2023 }
+author = { Yangye Yan }
+title = { Research trends and hotspots on connectomes from 2005 to 2021: A bibliometric and latent Dirichlet allocation application study. }
+year = { 2023 }
+journal = { Frontiers in neuroscience }
+volume = { 16 }
+
+@article{ Amir Shmuel:2023 }
+author = { Amir Shmuel }
+title = { Editorial: Deep learning techniques and their applications to the healthy and disordered brain - during development through adulthood and beyond. }
+year = { 2023 }
+journal = { Frontiers in neuroscience }
+volume = { 16 }
+
+@article{ Ming Ni:2023 }
+author = { Ming Ni }
+title = { Deep learning-assisted classification of calcaneofibular ligament injuries in the ankle joint. }
+year = { 2023 }
+journal = { Quantitative imaging in medicine and surgery }
+volume = { 13 }
+
+@article{ Zhihong Gao:2023 }
+author = { Zhihong Gao }
+title = { Application of Machine Learning in Intelligent Medical Image Diagnosis and Construction of Intelligent Service Process. }
+year = { 2023 }
+journal = { Computational intelligence and neuroscience }
+volume = { 2022 }
+
+@article{ Zhivko Zhelev:2023 }
+author = { Zhivko Zhelev }
+title = { Test accuracy of artificial intelligence-based grading of fundus images in diabetic retinopathy screening: A systematic review. }
+year = { 2023 }
+journal = { Journal of medical screening }
+
+@article{ Djamel Dabli:2023 }
+author = { Djamel Dabli }
+title = { Comparison of image quality of two versions of deep-learning image reconstruction algorithm on a rapid kV-switching CT: a phantom study. }
+year = { 2023 }
+journal = { European radiology experimental }
+volume = { 7 }
+
+@article{ E M Raat:2023 }
+author = { E M Raat }
+title = { Using global feedback to induce learning of gist of abnormality in mammograms. }
+year = { 2023 }
+journal = { Cognitive research: principles and implications }
+volume = { 8 }
+
+@article{ Prajoy Podder:2023 }
+author = { Prajoy Podder }
+title = { LDDNet: A Deep Learning Framework for the Diagnosis of Infectious Lung Diseases. }
+year = { 2023 }
+journal = { Sensors (Basel, Switzerland) }
+volume = { 23 }
+
+@article{ Giovanni Gibertoni:2023 }
+author = { Giovanni Gibertoni }
+title = { Vision-Based Eye Image Classification for Ophthalmic Measurement Systems. }
+year = { 2023 }
+journal = { Sensors (Basel, Switzerland) }
+volume = { 23 }
+
+@article{ Eunchan Kim:2023 }
+author = { Eunchan Kim }
+title = { Honeycomb Artifact Removal Using Convolutional Neural Network for Fiber Bundle Imaging. }
+year = { 2023 }
+journal = { Sensors (Basel, Switzerland) }
+volume = { 23 }
+
+@article{ Bram Ton:2023 }
+author = { Bram Ton }
+title = { Semantic Segmentation of Terrestrial Laser Scans of Railway Catenary Arches: A Use Case Perspective. }
+year = { 2023 }
+journal = { Sensors (Basel, Switzerland) }
+volume = { 23 }
+
+@article{ Minhaj Alam:2023 }
+author = { Minhaj Alam }
+title = { Segmentation-Assisted Fully Convolutional Neural Network Enhances Deep Learning Performance to Identify Proliferative Diabetic Retinopathy. }
+year = { 2023 }
+journal = { Journal of clinical medicine }
+volume = { 12 }
+
+@article{ Jo-Hsuan Wu:2023 }
+author = { Jo-Hsuan Wu }
+title = { Application of Deep Learning to Retinal-Image-Based Oculomics for Evaluation of Systemic Health: A Review. }
+year = { 2023 }
+journal = { Journal of clinical medicine }
+volume = { 12 }
+
+@article{ Rupali Kiran Shinde:2023 }
+author = { Rupali Kiran Shinde }
+title = { Squeeze-MNet: Precise Skin Cancer Detection Model for Low Computing IoT Devices Using Transfer Learning. }
+year = { 2023 }
+journal = { Cancers }
 volume = { 15 }
 
-@article{ Jeewook Choi:2023 }
-author = { Jeewook Choi }
-title = { Promoting Mental Health Literacy at Schools in South Korea. }
+@article{ Navchetan Awasthi:2023 }
+author = { Navchetan Awasthi }
+title = { Bandwidth Improvement in Ultrasound Image Reconstruction Using Deep Learning Techniques. }
 year = { 2023 }
-journal = { Soa--ch'ongsonyon chongsin uihak = Journal of child & adolescent psychiatry }
-volume = { 34 }
-
-@article{ Eunkyung Jo:2023 }
-author = { Eunkyung Jo }
-title = { Deterioration of Mental Health in Children and Adolescents During the COVID-19 Pandemic. }
-year = { 2023 }
-journal = { Soa--ch'ongsonyon chongsin uihak = Journal of child & adolescent psychiatry }
-volume = { 34 }
-
-@article{ Yong-Sil Kweon:2023 }
-author = { Yong-Sil Kweon }
-title = { Enhancing the School Mental Health Initiative Amid COVID-19. }
-year = { 2023 }
-journal = { Soa--ch'ongsonyon chongsin uihak = Journal of child & adolescent psychiatry }
-volume = { 34 }
-
-@article{ Seo Jung Kim:2023 }
-author = { Seo Jung Kim }
-title = { Introduction of Child and Adolescent Mental Health Services in Korea and Their Role During the COVID-19 Pandemic: Focusing on the Ministry of Education Policy. }
-year = { 2023 }
-journal = { Soa--ch'ongsonyon chongsin uihak = Journal of child & adolescent psychiatry }
-volume = { 34 }
-
-@article{ Viskasari P Kalanjati:2023 }
-author = { Viskasari P Kalanjati }
-title = { Health literacy on COVID-19 and COVID-19 vaccinations in Indonesia. }
-year = { 2023 }
-journal = { F1000Research }
+journal = { Healthcare (Basel, Switzerland) }
 volume = { 11 }
 
-@article{ Javier David Benitez Fuentes:2023 }
-author = { Javier David Benitez Fuentes }
-title = { Adverse drug reactions to the three doses of the severe acute respiratory syndrome coronavirus 2 (SARS-COV-2) mRNA-1273 vaccine in a cohort of cancer patients under active treatment of a tertiary hospital in Madrid, Spain. }
+@article{ Rana Alabdan:2023 }
+author = { Rana Alabdan }
+title = { Artificial-Intelligence-Based Decision Making for Oral Potentially Malignant Disorder Diagnosis in Internet of Medical Things Environment. }
 year = { 2023 }
-journal = { F1000Research }
+journal = { Healthcare (Basel, Switzerland) }
 volume = { 11 }
 
-@article{ Robert Opora:2023 }
-author = { Robert Opora }
-title = { The family situation of wards under the supervision of court - appointed custodians during COVID-19 pandemic in Poland: a self-report study to examine the perception of probation officers. }
+@article{ Rasha A Mansouri:2023 }
+author = { Rasha A Mansouri }
+title = { Equilibrium Optimization Algorithm with Ensemble Learning Based Cervical Precancerous Lesion Classification Model. }
 year = { 2023 }
-journal = { F1000Research }
+journal = { Healthcare (Basel, Switzerland) }
 volume = { 11 }
 
-@article{ Anna Vittoria Mattioli:2023 }
-author = { Anna Vittoria Mattioli }
-title = { Long COVID: A New Challenge for Prevention of Obesity in Women. }
+@article{ Naeem Ullah:2023 }
+author = { Naeem Ullah }
+title = { A Holistic Approach to Identify and Classify COVID-19 from Chest Radiographs, ECG, and CT-Scan Images Using ShuffleNet Convolutional Neural Network. }
 year = { 2023 }
-journal = { American journal of lifestyle medicine }
-volume = { 17 }
-
-@article{ Omika Katoch:2023 }
-author = { Omika Katoch }
-title = { High Prevalence of Fungal and NDM-OXA Producing Gram-Negative Bacterial Superinfections in the Second Wave of Coronavirus Disease 2019 in India: Experience from a Dedicated Coronavirus Disease 2019 Hospital in North India. }
-year = { 2023 }
-journal = { Journal of global infectious diseases }
-volume = { 14 }
-
-@article{ Bhushan Sudhakar Wankhade:2023 }
-author = { Bhushan Sudhakar Wankhade }
-title = { Post-COVID-19 Cerebral Pheohyphomycosis due to Rhinocladiella mackenziei: A Middle Eastern Replica of Post-COVID-19 Mucormycosis? }
-year = { 2023 }
-journal = { Journal of global infectious diseases }
-volume = { 14 }
-
-@article{ Paris Hosseini:2023 }
-author = { Paris Hosseini }
-title = { The role of the electroencephalogram (EEG) in determining the aetiology of catatonia: a systematic review and meta-analysis of diagnostic test accuracy. }
-year = { 2023 }
-journal = { EClinicalMedicine }
-volume = { 56 }
-
-@article{ Yunyue Liu:2023 }
-author = { Yunyue Liu }
-title = { Patient Preferences for Cardiac Rehabilitation - A Systematic Review. }
-year = { 2023 }
-journal = { Patient preference and adherence }
-volume = { 17 }
-
-@article{ Veerle J Ruijters:2023 }
-author = { Veerle J Ruijters }
-title = { Rhabdomyolysis after COVID-19 Comirnaty Vaccination: A Case Report. }
-year = { 2023 }
-journal = { Case reports in neurology }
-volume = { 14 }
-
-@article{ Roza Tatayeva:2023 }
-author = { Roza Tatayeva }
-title = { Psychosomatic Aspects of The Development of Comorbid Pathology: A Review. }
-year = { 2023 }
-journal = { Medical journal of the Islamic Republic of Iran }
-volume = { 36 }
-
-@article{ Lochana Nanayakkara:2023 }
-author = { Lochana Nanayakkara }
-title = { Reduction in cycle time for a rapid polymerase chain reaction diagnostic test at the point of care. }
-year = { 2023 }
-journal = { Journal of infection prevention }
-volume = { 24 }
-
-@article{ Gabriel Owusu:2023 }
-author = { Gabriel Owusu }
-title = { Temporal dynamics for areal unit-based co-occurrence COVID-19 trajectories. }
-year = { 2023 }
-journal = { AIMS public health }
-volume = { 9 }
-
-@article{ Joram Weber:2023 }
-author = { Joram Weber }
-title = { Promoting fruit and vegetable consumption during the COVID-19 pandemic - SportStudisMoveYou (SSMY): A randomized controlled trial. }
-year = { 2023 }
-journal = { AIMS public health }
-volume = { 9 }
-
-@article{ José Miguel Uribe-Restrepo:2023 }
-author = { José Miguel Uribe-Restrepo }
-title = { Mental health and psychosocial impact of the COVID-19 pandemic and social distancing measures among young adults in Bogotá, Colombia. }
-year = { 2023 }
-journal = { AIMS public health }
-volume = { 9 }
-
-@article{ Julie Ayre:2023 }
-author = { Julie Ayre }
-title = { COVID-19 Testing and Vaccine Willingness: Cross-Sectional Survey in a Culturally Diverse Community in Sydney, Australia. }
-year = { 2023 }
-journal = { Health equity }
-volume = { 6 }
-
-@article{ Ritika Saranath:2023 }
-author = { Ritika Saranath }
-title = { A retrospective analysis of rates of dermatology follow-up and new skin cancer diagnosis among solid organ transplant recipients during the COVID-19 pandemic. }
-year = { 2023 }
-journal = { JAAD international }
-volume = { 10 }
-
-@article{ Imane El Dika:2023 }
-author = { Imane El Dika }
-title = { Congenital cardiac liver cirrhosis with combined hepatocellular-cholangiocarcinoma-a case report. }
-year = { 2023 }
-journal = { Journal of gastrointestinal oncology }
+journal = { Diagnostics (Basel, Switzerland) }
 volume = { 13 }
 
-@article{ Xiaocang Xu:2023 }
-author = { Xiaocang Xu }
-title = { Risk Characteristics of Catastrophic Health Expenditure in Multidimensional Borderline Poor Households in China. }
+@article{ Adnane Ait Nasser:2023 }
+author = { Adnane Ait Nasser }
+title = { A Review of Recent Advances in Deep Learning Models for Chest Disease Detection Using Radiography. }
 year = { 2023 }
-journal = { Risk management and healthcare policy }
+journal = { Diagnostics (Basel, Switzerland) }
+volume = { 13 }
+
+@article{ Soumya Ranjan Nayak:2023 }
+author = { Soumya Ranjan Nayak }
+title = { An Efficient Deep Learning Method for Detection of COVID-19 Infection Using Chest X-ray Images. }
+year = { 2023 }
+journal = { Diagnostics (Basel, Switzerland) }
+volume = { 13 }
+
+@article{ Arnab Bagchi:2023 }
+author = { Arnab Bagchi }
+title = { A Multi-Stage Approach to Breast Cancer Classification Using Histopathology Images. }
+year = { 2023 }
+journal = { Diagnostics (Basel, Switzerland) }
+volume = { 13 }
+
+@article{ Karl Ludger Radke:2023 }
+author = { Karl Ludger Radke }
+title = { Adaptive IoU Thresholding for Improving Small Object Detection: A Proof-of-Concept Study of Hand Erosions Classification of Patients with Rheumatic Arthritis on X-ray Images. }
+year = { 2023 }
+journal = { Diagnostics (Basel, Switzerland) }
+volume = { 13 }
+
+@article{ Lawrence Wing Chi Chan:2023 }
+author = { Lawrence Wing Chi Chan }
+title = { Primary Tumor Radiomic Model for Identifying Extrahepatic Metastasis of Hepatocellular Carcinoma Based on Contrast Enhanced Computed Tomography. }
+year = { 2023 }
+journal = { Diagnostics (Basel, Switzerland) }
+volume = { 13 }
+
+@article{ Hadaate Ullah:2023 }
+author = { Hadaate Ullah }
+title = { An Automatic Premature Ventricular Contraction Recognition System Based on Imbalanced Dataset and Pre-Trained Residual Network Using Transfer Learning on ECG Signal. }
+year = { 2023 }
+journal = { Diagnostics (Basel, Switzerland) }
+volume = { 13 }
+
+@article{ Ayse Seyer Cagatan:2023 }
+author = { Ayse Seyer Cagatan }
+title = { An Alternative Diagnostic Method for C. neoformans: Preliminary Results of Deep-Learning Based Detection Model. }
+year = { 2023 }
+journal = { Diagnostics (Basel, Switzerland) }
+volume = { 13 }
+
+@article{ Rubén G Barriada:2023 }
+author = { Rubén G Barriada }
+title = { An Overview of Deep-Learning-Based Methods for Cardiovascular Risk Assessment with Retinal Images. }
+year = { 2023 }
+journal = { Diagnostics (Basel, Switzerland) }
+volume = { 13 }
+
+@article{ Ricky Walsh:2023 }
+author = { Ricky Walsh }
+title = { A Comparison of Techniques for Class Imbalance in Deep Learning Classification of Breast Cancer. }
+year = { 2023 }
+journal = { Diagnostics (Basel, Switzerland) }
+volume = { 13 }
+
+@article{ Nicole Brunetti:2023 }
+author = { Nicole Brunetti }
+title = { Artificial Intelligence in Breast Ultrasound: From Diagnosis to Prognosis-A Rapid Review. }
+year = { 2023 }
+journal = { Diagnostics (Basel, Switzerland) }
+volume = { 13 }
+
+@article{ Xianjue Huang:2023 }
+author = { Xianjue Huang }
+title = { 3D carotid artery segmentation using shape-constrained active contours. }
+year = { 2023 }
+journal = { Computers in biology and medicine }
+volume = { 153 }
+
+@article{ Simon Maennlin:2023 }
+author = { Simon Maennlin }
+title = { Application of deep learning-based super-resolution to T1-weighted postcontrast gradient echo imaging of the chest. }
+year = { 2023 }
+journal = { La Radiologia medica }
+
+@article{ Chethan Jujjavarapu:2023 }
+author = { Chethan Jujjavarapu }
+title = { Predicting decompression surgery by applying multimodal deep learning to patients' structured and unstructured health data. }
+year = { 2023 }
+journal = { BMC medical informatics and decision making }
+volume = { 23 }
+
+@article{ Takaaki Yoshimura:2023 }
+author = { Takaaki Yoshimura }
+title = { Prostatic urinary tract visualization with super-resolution deep learning models. }
+year = { 2023 }
+journal = { PloS one }
+volume = { 18 }
+
+@article{ Hongyi Dammu:2023 }
+author = { Hongyi Dammu }
+title = { Deep learning prediction of pathological complete response, residual cancer burden, and progression-free survival in breast cancer patients. }
+year = { 2023 }
+journal = { PloS one }
+volume = { 18 }
+
+@article{ Alejandro Gutierrez:2023 }
+author = { Alejandro Gutierrez }
+title = { Lesion-preserving unpaired image-to-image translation between MRI and CT from ischemic stroke patients. }
+year = { 2023 }
+journal = { International journal of computer assisted radiology and surgery }
+
+@article{ Xuanxuan Zhang:2023 }
+author = { Xuanxuan Zhang }
+title = { Image restoration for blurry optical images caused by photon diffusion with deep learning. }
+year = { 2023 }
+journal = { Journal of the Optical Society of America. A, Optics, image science, and vision }
+volume = { 40 }
+
+@article{ Shoma Kataoka:2023 }
+author = { Shoma Kataoka }
+title = { Noise-robust deep learning ghost imaging using a non-overlapping pattern for defect position mapping. }
+year = { 2023 }
+journal = { Applied optics }
+volume = { 61 }
+
+@article{ Jialong Yu:2023 }
+author = { Jialong Yu }
+title = { Ultrasound images-based deep learning radiomics nomogram for preoperative prediction of RET rearrangement in papillary thyroid carcinoma. }
+year = { 2023 }
+journal = { Frontiers in endocrinology }
+volume = { 13 }
+
+@article{ Il-Seok Song:2023 }
+author = { Il-Seok Song }
+title = { Deep learning-based apical lesion segmentation from panoramic radiographs. }
+year = { 2023 }
+journal = { Imaging science in dentistry }
+volume = { 52 }
+
+@article{ Rini Widyaningrum:2023 }
+author = { Rini Widyaningrum }
+title = { Comparison of Multi-Label U-Net and Mask R-CNN for panoramic radiograph segmentation to detect periodontitis. }
+year = { 2023 }
+journal = { Imaging science in dentistry }
+volume = { 52 }
+
+@article{ Zhichao Zuo:2023 }
+author = { Zhichao Zuo }
+title = { Multiparametric magnetic resonance imaging-derived deep learning network to determine ferroptosis-related gene signatures in gliomas. }
+year = { 2023 }
+journal = { Frontiers in neuroscience }
 volume = { 16 }
 
-@article{ Whittney H Darnell:2023 }
-author = { Whittney H Darnell }
-title = { Exploring First Responder Beliefs and Decisions to Vaccinate Against SARS-COV-2. }
+@article{ David Jin:2023 }
+author = { David Jin }
+title = { Independent assessment of a deep learning system for lymph node metastasis detection on the Augmented Reality Microscope. }
 year = { 2023 }
-journal = { Health communication }
+journal = { Journal of pathology informatics }
+volume = { 13 }
 
-@article{ Haozhe Fan:2023 }
-author = { Haozhe Fan }
-title = { Lung ultrasound-guided treatment for acute respiratory distress syndrome in a critically ill patient with severe COVID-19: a case report. }
+@article{ Bin Li:2023 }
+author = { Bin Li }
+title = { Differentiation of pancreatic ductal adenocarcinoma and chronic pancreatitis using graph neural networks on histopathology and collagen fiber features. }
 year = { 2023 }
-journal = { Annals of palliative medicine }
-volume = { 11 }
+journal = { Journal of pathology informatics }
+volume = { 13 }
 
-@article{ Charles B Simone:2023 }
-author = { Charles B Simone }
-title = { The current scope of the COVID-19 pandemic and its influence on palliative medicine. }
+@article{ Romane Gauriau:2023 }
+author = { Romane Gauriau }
+title = { Head CT deep learning model is highly accurate for early infarct estimation. }
 year = { 2023 }
-journal = { Annals of palliative medicine }
-volume = { 11 }
+journal = { Scientific reports }
+volume = { 13 }
 
-@article{ Se Hwan Hwang:2023 }
-author = { Se Hwan Hwang }
-title = { The Efficacy of Olfactory Training as a Treatment for Olfactory Disorders Caused by Coronavirus Disease-2019: A Systematic Review and Meta-Analysis. }
+@article{ Xiang Zhao:2023 }
+author = { Xiang Zhao }
+title = { SwinGAN: A dual-domain Swin Transformer-based generative adversarial network for MRI reconstruction. }
 year = { 2023 }
-journal = { American journal of rhinology & allergy }
+journal = { Computers in biology and medicine }
+volume = { 153 }
 
-@article{ Donna Wakefield:2023 }
-author = { Donna Wakefield }
-title = { Tackling the NHS mental health crisis of working through the COVID-19 pandemic; pilot creative writing programme has potential to support wellbeing of recovering healthcare workers. }
+@article{ Anna Landsmann:2023 }
+author = { Anna Landsmann }
+title = { Detection of microcalcifications in photon-counting dedicated breast-CT using a deep convolutional neural network: Proof of principle. }
 year = { 2023 }
-journal = { The journal of the Royal College of Physicians of Edinburgh }
+journal = { Clinical imaging }
+volume = { 95 }
 
-@article{ Gülpınar Aslan:2023 }
-author = { Gülpınar Aslan }
-title = { An investigation of women's hygiene habits and the affecting factors during the Covid-19 pandemic. }
+@article{ Jianguo Chen:2023 }
+author = { Jianguo Chen }
+title = { Synchronous Medical Image Augmentation framework for deep learning-based image segmentation. }
 year = { 2023 }
-journal = { Women & health }
+journal = { Computerized medical imaging and graphics : the official journal of the Computerized Medical Imaging Society }
+volume = { 104 }
 
-@article{ Kim McMillan:2023 }
-author = { Kim McMillan }
-title = { New Graduate Nurses Navigating Entry to Practice in the Covid-19 Pandemic. }
+@article{ Lydia Djenoune:2023 }
+author = { Lydia Djenoune }
+title = { Cilia function as calcium-mediated mechanosensors that instruct left-right asymmetry. }
 year = { 2023 }
-journal = { The Canadian journal of nursing research = Revue canadienne de recherche en sciences infirmieres }
+journal = { Science (New York, N.Y.) }
+volume = { 379 }
 
-@article{ Harry Collins:2023 }
-author = { Harry Collins }
-title = { Scientific conferences, socialization, and the Covid-19 pandemic: A conceptual and empirical enquiry. }
+@article{ Long Cui:2023 }
+author = { Long Cui }
+title = { Motion artifact reduction for magnetic resonance imaging with deep learning and k-space analysis. }
 year = { 2023 }
-journal = { Social studies of science }
+journal = { PloS one }
+volume = { 18 }
 
-@article{ Adithya J:2023 }
-author = { Adithya J }
-title = { Identification of Kaempferol as viral entry inhibitor and DL-Arginine as viral replication inhibitor from selected plants of Indian traditional medicine against COVID-19: An in silico guided in vitro approach. }
+@article{ Davide Chicco:2023 }
+author = { Davide Chicco }
+title = { Ten quick tips for computational analysis of medical images. }
 year = { 2023 }
-journal = { Current computer-aided drug design }
+journal = { PLoS computational biology }
+volume = { 19 }
 
-@article{ Ryan Holliday:2023 }
-author = { Ryan Holliday }
-title = { Brief Narrative Writing Program Implemented in a Neurosurgical Intensive Care Unit During the COVID-19 Pandemic. }
+@article{ J Levi Chazen:2023 }
+author = { J Levi Chazen }
+title = { Rapid lumbar MRI protocol using 3D imaging and deep learning reconstruction. }
 year = { 2023 }
-journal = { American journal of critical care : an official publication, American Association of Critical-Care Nurses }
+journal = { Skeletal radiology }
 
-@article{ Li-Lan Zhang:2023 }
-author = { Li-Lan Zhang }
-title = { [Migration, Transformation, and Toxicity of Quaternary Ammonium Antimicrobial Agents in the Environment]. }
+@article{ Genki Terashi:2023 }
+author = { Genki Terashi }
+title = { Protein model refinement for cryo-EM maps using AlphaFold2 and the DAQ score. }
 year = { 2023 }
-journal = { Huan jing ke xue= Huanjing kexue }
-volume = { 44 }
+journal = { Acta crystallographica. Section D, Structural biology }
+volume = { 79 }
 
-@article{ Tian-Qiang Liu:2023 }
-author = { Tian-Qiang Liu }
-title = { [Numerical Response Analysis of PM2.5-O3 Compound Pollution in Beijing]. }
+@article{ Mingxu Huang:2023 }
+author = { Mingxu Huang }
+title = { Segmentation of Clinical Target Volume From CT Images for Cervical Cancer Using Deep Learning. }
 year = { 2023 }
-journal = { Huan jing ke xue= Huanjing kexue }
-volume = { 44 }
+journal = { Technology in cancer research & treatment }
+volume = { 22 }
 
-@article{ Chee-Tao Chang:2023 }
-author = { Chee-Tao Chang }
-title = { Polypharmacy and potentially inappropriate medications among hospitalized older adults with COVID-19 in Malaysian tertiary hospitals. }
+@article{ Maike Theis:2023 }
+author = { Maike Theis }
+title = { Deep learning enables automated MRI-based estimation of uterine volume also in patients with uterine fibroids undergoing high-intensity focused ultrasound therapy. }
 year = { 2023 }
-journal = { Journal of pharmaceutical policy and practice }
-volume = { 16 }
+journal = { Insights into imaging }
+volume = { 14 }
 
-@article{ Fatima Wong:2023 }
-author = { Fatima Wong }
-title = { Diagnostic and treatment dilemma during the coronavirus disease 2019 pandemic: a primary pulmonary lymphoma presenting as a cavitary mass in a patient with coronavirus disease 2019: a case report. }
+@article{ Eren Tekin:2023 }
+author = { Eren Tekin }
+title = { Tubule-U-Net: a novel dataset and deep learning-based tubule segmentation framework in whole slide images of breast cancer. }
 year = { 2023 }
-journal = { Journal of medical case reports }
-volume = { 17 }
+journal = { Scientific reports }
+volume = { 13 }
+
+@article{ Yasuhiro Matsunaga:2023 }
+author = { Yasuhiro Matsunaga }
+title = { End-to-end differentiable blind tip reconstruction for noisy atomic force microscopy images. }
+year = { 2023 }
+journal = { Scientific reports }
+volume = { 13 }
+
+@article{ M M Dobrolinska:2023 }
+author = { M M Dobrolinska }
+title = { Systematic assessment of coronary calcium detectability and quantification on four generations of CT reconstruction techniques: a patient and phantom study. }
+year = { 2023 }
+journal = { The international journal of cardiovascular imaging }
+volume = { 39 }
+
+@article{ Yoko Kato:2023 }
+author = { Yoko Kato }
+title = { The mechanisms of arterial signal intensity profile in non-contrast coronary MRA (NC-MRCA): a 3D printed phantom investigation and clinical translations. }
+year = { 2023 }
+journal = { The international journal of cardiovascular imaging }
+volume = { 39 }
+
+@article{ Paul T Kim:2023 }
+author = { Paul T Kim }
+title = { Learning to automate cryo-electron microscopy data collection with Ptolemy. }
+year = { 2023 }
+journal = { IUCrJ }
+volume = { 10 }
+
+@article{ Xinyu Song:2023 }
+author = { Xinyu Song }
+title = { [Automatic Delineation of Clinical Target Volume and Organ at Risk by Deep Learning for Prostate Cancer Adaptive Radiotherapy]. }
+year = { 2023 }
+journal = { Zhongguo yi liao qi xie za zhi = Chinese journal of medical instrumentation }
+volume = { 46 }
+
+@article{ Avantika Vardhan:2023 }
+author = { Avantika Vardhan }
+title = { A radiographic, deep transfer learning framework, adapted to estimate lung opacities from chest x-rays. }
+year = { 2023 }
+journal = { Bioelectronic medicine }
+volume = { 9 }
+
+@article{ Minyue Yin:2023 }
+author = { Minyue Yin }
+title = { Identification of Asymptomatic COVID-19 Patients on Chest CT Images Using Transformer-Based or Convolutional Neural Network-Based Deep Learning Models. }
+year = { 2023 }
+journal = { Journal of digital imaging }
+
+@article{ Jianyang Xie:2023 }
+author = { Jianyang Xie }
+title = { Deep segmentation of OCTA for evaluation and association of changes of retinal microvasculature with Alzheimer's disease and mild cognitive impairment. }
+year = { 2023 }
+journal = { The British journal of ophthalmology }
+
+@article{ Thabo Mahendiran:2023 }
+author = { Thabo Mahendiran }
+title = { Deep learning-based prediction of future myocardial infarction using invasive coronary angiography: a feasibility study. }
+year = { 2023 }
+journal = { Open heart }
+volume = { 10 }
+
+@article{ Chenzhong Yin:2023 }
+author = { Chenzhong Yin }
+title = { Anatomically interpretable deep learning of brain age captures domain-specific cognitive impairment. }
+year = { 2023 }
+journal = { Proceedings of the National Academy of Sciences of the United States of America }
+volume = { 120 }
+
+@article{ Chieh-Te Lin:2023 }
+author = { Chieh-Te Lin }
+title = { Multi-tasking deep network for tinnitus classification and severity prediction from multimodal structural MR images. }
+year = { 2023 }
+journal = { Journal of neural engineering }
+
+@article{ Shaonan Liu:2023 }
+author = { Shaonan Liu }
+title = { Accelerated cardiac diffusion tensor imaging using deep neural network. }
+year = { 2023 }
+journal = { Physics in medicine and biology }
+volume = { 68 }
+
+@article{ Lintao Zhang:2023 }
+author = { Lintao Zhang }
+title = { Understanding Clinical Progression of Late-Life Depression to Alzheimer's Disease Over 5 Years with Structural MRI. }
+year = { 2023 }
+journal = { Machine learning in medical imaging. MLMI (Workshop) }
+volume = { 13583 }
 

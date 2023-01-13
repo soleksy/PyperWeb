@@ -5,8 +5,8 @@ from xml.etree.ElementTree import fromstring, ElementTree
 
 class ArxivHelper:
     data = ""
-    def __init__(self):
-        self.CONST_QUERY_RESULTS = "100"
+    def __init__(self , numOfArticles):
+        self.CONST_QUERY_RESULTS = str(numOfArticles)
 
     def url_encode(self, string):
         encode_list = [(" ", "%20"), (":", "%3A"), ("/", "%2" + "F")]

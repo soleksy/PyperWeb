@@ -5,12 +5,11 @@ from bs4 import BeautifulSoup
 from pylatexenc.latex2text import LatexNodes2Text
 
 
-class PubMedHelper:
-    def __init__(self):
-        self.CONST_QUERY_RESULTS=100
+class PubmedHelper:
+    def __init__(self , numOfArticles):
+        self.CONST_QUERY_RESULTS=numOfArticles
         self.CONST_FETCH_URL='https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi'
         self.CONST_SEARCH_URL='https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi'
-
 
     def search_pubmed(self, params):
         base_url = self.CONST_SEARCH_URL
@@ -20,6 +19,17 @@ class PubMedHelper:
 
     def get_article_ids(self,json_response):
         return json_response['esearchresult']['idlist']
+
+    
+    def pubmedURLGenerator(self,query):
+        params = {'db': 'pubmed', 'term': query, 'retmax': self.CONST_QUERY_RESULTS, 'retmode': 'json'}
+        json_response = self.search_pubmed(params)
+        article_ids = self.get_article_ids(json_response)
+        fetch_params = {'db': 'pubmed', 'id': ','.join(article_ids), 'rettype': 'abstract', 'retmode': 'xml' , 'sort': 'relevance'}
+        base_url = self.CONST_FETCH_URL
+        full_url = base_url + '?' + '&'.join([f'{key}={value}' for key, value in fetch_params.items()])
+
+        return full_url
 
     def fetch_articles_info(self, article_ids, rettype , retmode) :
         base_url = self.CONST_FETCH_URL
@@ -35,7 +45,7 @@ class PubMedHelper:
             elif retmode == 'xml':
                 outfile.write(response)
 
-class PubMedParser:
+class PubmedParser:
     '''Load and parse the xml data from the API'''
     def __init__(self , source):
         self.ListOfArticles = list()
@@ -43,7 +53,7 @@ class PubMedParser:
 
         self.xml_data = source
 
-    def parse_article_info(self):
+    def parseArticleInfo(self):
         '''
         author, list of authors, journal, article title, abstract, doi,year, volume
         '''
@@ -55,11 +65,11 @@ class PubMedParser:
                 article_info['Title'] = article.find('ArticleTitle').text
 
             if article.find('Abstract') is not None:
-                article_info['abstract'] = article.find('Abstract').text
+                article_info['Summary'] = article.find('Abstract').text
 
-            if article.find('ElocationID') is not None:
-                article_info['Doi'] = article.find('ElocationID').text
-
+            if article.find('ELocationID') is not None:
+                article_info['Doi'] = article.find('ELocationID' , {'EIdType': 'doi', 'ValidYN': 'Y'}).text
+        
             if article.find('AuthorList').find('ForeName') is not None:
                 foreName = article.find('AuthorList').find('ForeName').text
             else:
@@ -96,10 +106,10 @@ class PubMedParser:
                 article_info['Volume'] = article.find('Volume').text
 
             if article.find('Year') is not None:
-                article_info['Year'] = article.find('Year').text
+                article_info['Year'] = int(article.find('Year').text)
             
             article_info['Bibtex'] = self.convertToBibtex(article_info)
-
+            article_info['DB'] = "https://www.ncbi.nlm.nih.gov/"
             self.ListOfArticles.append(article_info)
 
 
@@ -184,10 +194,10 @@ class PubMedParser:
 
 
 def main():
-    Helper = PubMedHelper()
+    Helper = PubmedHelper(100)
     
     # Search for articles
-    params = {'db': 'pubmed', 'term': 'covid', 'retmax': Helper.CONST_QUERY_RESULTS, 'retmode': 'json'}
+    params = {'db': 'pubmed', 'term': 'Deep learning for medical imaging', 'retmax': Helper.CONST_QUERY_RESULTS, 'retmode': 'json'}
     json_response = Helper.search_pubmed(params)
     article_ids = Helper.get_article_ids(json_response)
     Helper.apiToFile(json_response, 'search.json', 'json')
@@ -196,10 +206,9 @@ def main():
     response = Helper.fetch_articles_info(article_ids, 'abstract' , 'xml')
     Helper.apiToFile(response, 'articles.json', 'xml')
 
-    Parser = PubMedParser(response)
+    Parser = PubmedParser(response)
     # Parse articles info
-    Parser.parse_article_info()
+    Parser.parseArticleInfo()
     Parser.writeBibtex('articles.txt')
-        
 if __name__ == "__main__":
     main()

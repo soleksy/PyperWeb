@@ -4,18 +4,16 @@ import asyncio , httpx
 
 from .APIS.ARXIV.ArxivClasses import ArxivHelper,ArxivParser
 from .APIS.HEP.HepClasses import HepHelper ,  HepParser
+from .APIS.PUBMED.PubmedClasses import PubmedHelper , PubmedParser
 
 from sqlalchemy import create_engine
 
-from .constants import  ITEMS_PER_PAGE 
+from .constants import  ITEMS_PER_PAGE , NUMOFARTICLES
 
 from flask import render_template ,redirect,url_for,request ,session
 from flaskapp import app, db
 from flaskapp.forms import InfoForm
 from flaskapp.models import Article , User
-
-
-
 
 
 def sortByDateAscending(list):
@@ -94,8 +92,6 @@ def before_request():
         session['user_id'] = new_user.id
     
     
-    
-    
 @app.route('/' , methods=['GET' ,'POST'])
 def indexPage():
     
@@ -110,7 +106,12 @@ def indexPage():
             session['SEARCH'] = True
             return redirect(url_for('errorPage' , error=error))
         
-            
+        PUBMED = request.form.get('pubmed')
+        if PUBMED == None:
+            PUBMED = False
+        else:
+            PUBMED = True
+
         ARXIV = request.form.get('arxiv')
         if ARXIV == None:
             ARXIV = False
@@ -123,7 +124,7 @@ def indexPage():
         else:
             HEP = True
             
-        if not (ARXIV or HEP):
+        if not (ARXIV or HEP or PUBMED):
             error =  "You didn't select any databse to search"
         count_articles = Article.query.filter(Article.user_id == sessionID).count()
         if count_articles != 0:
@@ -144,6 +145,7 @@ def indexPage():
         
         session['HEP'] = HEP
         session['ARXIV'] = ARXIV
+        session['PUBMED'] = PUBMED
 
         
         return redirect(url_for('processData',searchQuery=searchQuery,page=1,sessionID=sessionID))
@@ -160,23 +162,31 @@ async def processData(searchQuery,sessionID):
     articles = []
     arxiv = session.get('ARXIV', None)
     hep = session.get('HEP', None)
+    pubmed = session.get('PUBMED', None)
 
     arxivArticleList = []
     hepArticleList = []
+    pubmedArticleList = []
     
     dbToSearch = []
     listOfApiCalls = []
     index = 0
         
     if arxiv:
-        arxivHelper = ArxivHelper()
+        arxivHelper = ArxivHelper(NUMOFARTICLES)
         url = arxivHelper.allParamSearch(searchQuery)
         listOfApiCalls.append(retrieveData(url))
             
     if hep:
-        hepHelper = HepHelper()
+        hepHelper = HepHelper(NUMOFARTICLES)
         url = hepHelper.hepUrlGenerator(searchQuery)
         listOfApiCalls.append(retrieveData(url))
+    
+    if pubmed:
+        pubmedHelper = PubmedHelper(NUMOFARTICLES)
+        url = pubmedHelper.pubmedURLGenerator(searchQuery)
+        listOfApiCalls.append(retrieveData(url))
+
 
     async with httpx.AsyncClient() as client:
         dbToSearch = await asyncio.gather(
@@ -195,9 +205,13 @@ async def processData(searchQuery,sessionID):
         hepParser.parseJsonFile()
         hepArticleList = hepParser.ListOfArticles
         index += 1
-        
+    if pubmed:
+        pubmedParser = PubmedParser(dbToSearch[index].content)
+        pubmedParser.parseArticleInfo()
+        pubmedArticleList = pubmedParser.ListOfArticles
+        index += 1
     
-    articles = (sortByDateDescending(filterArticles(hepArticleList + arxivArticleList)))
+    articles = (sortByDateDescending(filterArticles(hepArticleList + arxivArticleList + pubmedArticleList)))
     
     if len(articles) == 0:
         error = "No results for the submited query"

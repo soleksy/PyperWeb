@@ -1,12 +1,11 @@
 import json
 from re import S
 from urllib.request import urlopen
-from collections import defaultdict
 from pylatexenc.latex2text import LatexNodes2Text
 
 class HepHelper:
-    def __init__(self):
-        self.CONST_QUERY_RESULTS = "100"
+    def __init__(self,numOfArticles):
+        self.CONST_QUERY_RESULTS = str(numOfArticles)
 
     def hepUrlEncode(self, string):
         encode_list = [(" ", "%20"), (":", "%3A"), ("/", "%2" + "F")]
@@ -18,7 +17,7 @@ class HepHelper:
         
         url = "https://inspirehep.net/api/literature?sort=mostarticled&page=1&q=" + command_string + "&of=recjson" + \
             "&fields=titles,citation_count,first_author,dois,publication_info,collaborations,arxiv_eprints,number_of_pages,volume,author_count,abstracts&size=" + \
-            self.CONST_QUERY_RESULTS
+            self.CONST_QUERY_RESULTS + '&sort=mostrecent'
         return url
 
     def getSource(self, url):
