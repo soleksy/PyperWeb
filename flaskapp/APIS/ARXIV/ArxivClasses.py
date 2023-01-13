@@ -1,6 +1,4 @@
-from urllib.request import urlopen
 import requests
-import os
 from xml.etree.ElementTree import fromstring, ElementTree
 
 
