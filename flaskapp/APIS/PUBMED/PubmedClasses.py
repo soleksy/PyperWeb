@@ -69,7 +69,10 @@ class PubmedParser:
 
             if article.find('ELocationID') is not None:
                 article_info['Doi'] = article.find('ELocationID' , {'EIdType': 'doi', 'ValidYN': 'Y'}).text
-        
+            if article.find('ArticleId' ,{'IdType': "pubmed"}) is not None:
+                ArticleID = article.find('ArticleId' ,{'IdType': "pubmed"}).text
+                article_info['Link'] = "https://www.ncbi.nlm.nih.gov/pubmed/" + ArticleID
+
             if article.find('AuthorList').find('ForeName') is not None:
                 foreName = article.find('AuthorList').find('ForeName').text
             else:
@@ -191,24 +194,3 @@ class PubmedParser:
                 for k,v in article.items():
                     f.write(v +" }" + "\n")
                 f.write('\n')
-
-
-def main():
-    Helper = PubmedHelper(100)
-    
-    # Search for articles
-    params = {'db': 'pubmed', 'term': 'Deep learning for medical imaging', 'retmax': Helper.CONST_QUERY_RESULTS, 'retmode': 'json'}
-    json_response = Helper.search_pubmed(params)
-    article_ids = Helper.get_article_ids(json_response)
-    Helper.apiToFile(json_response, 'search.json', 'json')
-
-    # Fetch articles info
-    response = Helper.fetch_articles_info(article_ids, 'abstract' , 'xml')
-    Helper.apiToFile(response, 'articles.json', 'xml')
-
-    Parser = PubmedParser(response)
-    # Parse articles info
-    Parser.parseArticleInfo()
-    Parser.writeBibtex('articles.txt')
-if __name__ == "__main__":
-    main()
