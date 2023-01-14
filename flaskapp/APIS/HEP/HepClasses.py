@@ -17,7 +17,7 @@ class HepHelper:
     def hepUrlGenerator(self, command_string):
         
         url = "https://inspirehep.net/api/literature?sort=mostarticled&page=1&q=" + command_string + "&of=recjson" + \
-            "&fields=titles,citation_count,first_author,dois,publication_info,collaborations,arxiv_eprints,number_of_pages,volume,author_count,abstracts,recid&size=" + \
+            "&fields=titles,citation_count,first_author,dois,publication_info,collaborations,arxiv_eprints,number_of_pages,volume,author_count,abstracts,recid,earliest_date&size=" + \
             self.CONST_QUERY_RESULTS + '&sort=mostrecent'
         return url
 
@@ -57,6 +57,7 @@ class HepParser:
         else:
             authorCount = None;
         return authorCount
+        
     def getCitationCount(self,dic):
         if(dic['metadata'].get('citation_count') is None):
             citationCount = 0
@@ -170,7 +171,7 @@ class HepParser:
     
     def getFullDate(self,dic):
         if dic['metadata'].get("earliest_date") is None:
-            date = None
+            return None
         else:
             date = dic['metadata'].get("earliest_date")
             if len(date) == 4:

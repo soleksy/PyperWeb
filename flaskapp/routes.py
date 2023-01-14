@@ -15,12 +15,14 @@ from flaskapp import app, db
 from flaskapp.forms import InfoForm
 from flaskapp.models import Article , User
 
+from datetime import datetime
+import time
 
 def sortByDateAscending(list):
-    return sorted(list,key=lambda x:x['Year'] , reverse=False)
+    return sorted(list,key=lambda x:x['FullDate'] , reverse=False)
 
 def sortByDateDescending(list):
-    return sorted(list,key=lambda x:x['Year'] , reverse=True)
+    return sorted(list,key=lambda x:x['FullDate'] , reverse=True)
 
 def filterArticles(list):
     articleFilter = dict()
@@ -171,12 +173,11 @@ async def processData(searchQuery,sessionID):
     dbToSearch = []
     listOfApiCalls = []
     index = 0
-        
+
     if arxiv:
         arxivHelper = ArxivHelper(NUMOFARTICLES)
         url = arxivHelper.allParamSearch(searchQuery)
         listOfApiCalls.append(retrieveData(url))
-            
     if hep:
         hepHelper = HepHelper(NUMOFARTICLES)
         url = hepHelper.hepUrlGenerator(searchQuery)
@@ -187,12 +188,13 @@ async def processData(searchQuery,sessionID):
         url = pubmedHelper.pubmedURLGenerator(searchQuery)
         listOfApiCalls.append(retrieveData(url))
 
-
     async with httpx.AsyncClient() as client:
         dbToSearch = await asyncio.gather(
             *listOfApiCalls
         )
         await client.aclose()
+
+
 
     if arxiv:
         arxivParser = ArxivParser(dbToSearch[index].content)
@@ -200,17 +202,19 @@ async def processData(searchQuery,sessionID):
         arxivParser.parseXML()
         arxivArticleList = arxivParser.ListOfArticles
         index += 1
+
     if hep:
         hepParser = HepParser(dbToSearch[index].content)
         hepParser.parseJsonFile()
         hepArticleList = hepParser.ListOfArticles
         index += 1
+        
     if pubmed:
         pubmedParser = PubmedParser(dbToSearch[index].content)
         pubmedParser.parseArticleInfo()
         pubmedArticleList = pubmedParser.ListOfArticles
         index += 1
-    
+
     articles = (sortByDateDescending(filterArticles(hepArticleList + arxivArticleList + pubmedArticleList)))
     
     if len(articles) == 0:
@@ -218,12 +222,14 @@ async def processData(searchQuery,sessionID):
         session['SEARCH'] = True
         return redirect(url_for('errorPage',error=error))
     else:
+        articleList = []
         for article in articles:
-            db.session.add(Article(title=article.get('Title'), description=article.get('Summary'), source=article.get('DB')
+            articleList.append(Article(title=article.get('Title'), description=article.get('Summary'), source=article.get('DB')
                                     ,firstAuthor=article.get('FirstAuthor'), yearPublished=article.get('Year'),
                                     numberOfAuthors=article.get('AuthorCount'),journal=article.get('Journal'),
                                     volume=article.get('Volume'),pages=article.get('Pages'),DOI=article.get('Doi'),
-                                    eprint=article.get('Eprint'),bibtex=article.get('Bibtex'),link = article.get('Link') ,user_id=sessionID))
+                                    eprint=article.get('Eprint'),bibtex=article.get('Bibtex'),link = article.get('Link') ,fullDate = datetime.strptime(article.get('FullDate') , '%Y-%m-%d'),user_id=sessionID))
+        db.session.bulk_save_objects([Article for Article in articleList])
         db.session.commit()
 
         page = request.args.get('page',1,type=int)

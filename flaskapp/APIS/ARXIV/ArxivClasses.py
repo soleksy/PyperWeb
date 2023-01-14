@@ -132,7 +132,6 @@ class ArxivParser:
                 splitDate = splitDateSpace
             else:
                 splitDate = splitDateT
-            print(splitDate)
             date = datetime.strptime(splitDate, '%Y-%m-%d')
             publishedConverted = date.strftime( '%Y-%m-%d')
         else:

@@ -9,8 +9,8 @@ from datetime import datetime
 class PubmedHelper:
     def __init__(self , numOfArticles):
         self.CONST_QUERY_RESULTS=numOfArticles
-        self.CONST_FETCH_URL='https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi'
-        self.CONST_SEARCH_URL='https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi'
+        self.CONST_FETCH_URL='https://eutilspreview.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi'
+        self.CONST_SEARCH_URL='https://eutilspreview.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi'
 
     def search_pubmed(self, params):
         base_url = self.CONST_SEARCH_URL
@@ -23,10 +23,10 @@ class PubmedHelper:
 
     
     def pubmedURLGenerator(self,query):
-        params = {'db': 'pubmed', 'term': query, 'retmax': self.CONST_QUERY_RESULTS, 'retmode': 'json'}
+        params = {'db': 'pubmed', 'term': query, 'retmax': self.CONST_QUERY_RESULTS, 'sort': 'relevance', 'retmode': 'json'}
         json_response = self.search_pubmed(params)
         article_ids = self.get_article_ids(json_response)
-        fetch_params = {'db': 'pubmed', 'id': ','.join(article_ids), 'rettype': 'abstract', 'retmode': 'xml' , 'sort': 'relevance'}
+        fetch_params = {'db': 'pubmed', 'id': ','.join(article_ids), 'rettype': 'abstract', 'retmode': 'xml' }
         base_url = self.CONST_FETCH_URL
         full_url = base_url + '?' + '&'.join([f'{key}={value}' for key, value in fetch_params.items()])
 
@@ -123,23 +123,26 @@ class PubmedParser:
             if article.find('Abstract') is not None:
                 article_info['Summary'] = article.find('Abstract').text
 
-            if article.find('ELocationID') is not None:
-                article_info['Doi'] = article.find('ELocationID' , {'EIdType': 'doi', 'ValidYN': 'Y'}).text
+            if article.find('ELocationID') is not None and article.find('ELocationID' , {'EIdType': 'doi'}) is not None:
+                article_info['Doi'] = article.find('ELocationID' , {'EIdType': 'doi'}).text
             if article.find('ArticleId' ,{'IdType': "pubmed"}) is not None:
                 ArticleID = article.find('ArticleId' ,{'IdType': "pubmed"}).text
                 article_info['Link'] = "https://www.ncbi.nlm.nih.gov/pubmed/" + ArticleID
 
-            if article.find('AuthorList').find('ForeName') is not None:
-                foreName = article.find('AuthorList').find('ForeName').text
+            if article.find('AuthorList') is None:
+                article_info['FirstAuthor'] = ''
             else:
-                foreName = ''
-            
-            if article.find('AuthorList').find('LastName') is not None:
-                lastName = article.find('AuthorList').find('LastName').text
-            else:
-                lastName = ''
+                if article.find('AuthorList').find('ForeName') is not None:
+                    foreName = article.find('AuthorList').find('ForeName').text
+                else:
+                    foreName = ''
 
-            article_info['FirstAuthor'] = foreName + ' ' + lastName
+                if article.find('AuthorList').find('LastName') is not None:
+                    lastName = article.find('AuthorList').find('LastName').text
+                else:
+                    lastName = ''
+
+                article_info['FirstAuthor'] = foreName + ' ' + lastName
 
             if article.find('AuthorList') is not None:
                 Authors = [author for author in article.find('AuthorList').find_all('Author')]

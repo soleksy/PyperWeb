@@ -5,16 +5,17 @@ from flaskapp import db
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.types import TypeDecorator
 from sqlalchemy.orm import relationship
-from .constants import SIZE
-from sqlalchemy import create_engine, MetaData
+from .constants import NUMOFARTICLES
+from sqlalchemy import create_engine, MetaData , DateTime
 from sqlalchemy_utils import UUIDType
+from .constants import DB_URI
 
-engine = create_engine('sqlite:////tmp/test.db', echo = True)
+engine = create_engine(DB_URI, echo = True)
 meta = MetaData()
 
 
 class TextPickleType(TypeDecorator):
-    impl = sqlalchemy.Text(SIZE)
+    impl = sqlalchemy.Text(NUMOFARTICLES)
 
     def process_bind_param(self, value, dialect):
         if value is not None:
@@ -37,6 +38,8 @@ class User(db.Model):
 class Article(db.Model):
     __tablename__ = 'articles'
     id = db.Column(UUIDType(binary=False), primary_key=True, default=uuid.uuid4)
+    user_id = db.Column(UUIDType(binary=False), db.ForeignKey('users.id'))
+
     title = db.Column(db.String(120), unique=False, nullable=True)
     description = db.Column(db.Text, nullable=True)
     source = db.Column(db.String(120), unique=False, nullable=True)
@@ -50,7 +53,8 @@ class Article(db.Model):
     eprint = db.Column(db.String(120), unique=False,nullable=True)
     bibtex = db.Column(TextPickleType())
     link = db.Column(db.String(120), unique=False, nullable=True)
-    user_id = db.Column(UUIDType(binary=False), db.ForeignKey('users.id'))
+    fullDate = db.Column(DateTime, unique=False, nullable=True)
+
 
     def __repr__(self):
         return '<Article %r>' % self.title
