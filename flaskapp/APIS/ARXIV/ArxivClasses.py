@@ -1,7 +1,7 @@
 import requests
 from xml.etree.ElementTree import fromstring, ElementTree
-
-
+import xml
+from bs4 import BeautifulSoup
 
 class ArxivHelper:
     data = ""
@@ -43,6 +43,7 @@ class ArxivParser:
     def __init__(self, contents):
         self.ListOfArticles = list()
         self.contents = contents
+
 
     def getComment(self,entry):
         if entry.find('comment') is not None:
@@ -114,6 +115,11 @@ class ArxivParser:
         else:
             id = None
         return id
+    def getLink(self,contents):
+        soup = BeautifulSoup(contents, features="xml")
+        link_tag = soup.find('link', {'title': 'pdf'})
+        pdf_link = link_tag['href']
+        return pdf_link
 
     def parseXML(self):
         singleArticle = dict()
@@ -130,6 +136,7 @@ class ArxivParser:
             singleArticle['Title'] = self.getTitle(entry)
             singleArticle['Year'] = self.getDatePublished(entry)
             singleArticle['LastUpdate']= self.getLastUpdate(entry)
+            singleArticle['Link'] = self.getLink(self.contents)
 
 
             comment = self.getComment(entry)
@@ -169,7 +176,7 @@ class ArxivParser:
         if article.get("Journal") is not None:
             journal = article["Journal"]
             singleBibtex['journal'] = "journal = { " + journal
-        if article.get("Year") is not 0:
+        if article.get("Year") != 0:
             year = str(article['Year']).split("-", 1)[0]
             singleBibtex['year'] = "year = { " + year 
         if article.get("Eprint") is not None:
@@ -283,4 +290,3 @@ class ArxivParser:
                 self.ListOfArticles,
                 key=lambda x: x['Last_Update'],
                 reverse=True)
-

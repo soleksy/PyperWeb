@@ -49,10 +49,9 @@ class Article(db.Model):
     DOI = db.Column(db.String(120), unique=False, nullable=True)
     eprint = db.Column(db.String(120), unique=False,nullable=True)
     bibtex = db.Column(TextPickleType())
-
+    link = db.Column(db.String(120), unique=False, nullable=True)
     user_id = db.Column(UUIDType(binary=False), db.ForeignKey('users.id'))
 
     def __repr__(self):
         return '<Article %r>' % self.title
-
 meta.create_all(engine)

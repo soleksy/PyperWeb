@@ -16,22 +16,18 @@ class HepHelper:
     def hepUrlGenerator(self, command_string):
         
         url = "https://inspirehep.net/api/literature?sort=mostarticled&page=1&q=" + command_string + "&of=recjson" + \
-            "&fields=titles,citation_count,first_author,dois,publication_info,collaborations,arxiv_eprints,number_of_pages,volume,author_count,abstracts&size=" + \
+            "&fields=titles,citation_count,first_author,dois,publication_info,collaborations,arxiv_eprints,number_of_pages,volume,author_count,abstracts,recid&size=" + \
             self.CONST_QUERY_RESULTS + '&sort=mostrecent'
         return url
 
     def getSource(self, url):
         with urlopen(url) as resp:
             source = resp.read().decode('utf-8')
-
-            self.writeToJson(source, "data/HEP_OUTPUT.json")
-
             return source
 
     def writeToJson(self, source, filename):
 
         data = json.loads(source)
-
         with open(filename, 'w') as f:
             string = json.dumps(data, indent=2)
             f.write(string)
@@ -131,6 +127,16 @@ class HepParser:
 
         return collaboration
 
+    def getRecid(self,dic):
+        if dic['metadata'].get('control_number') is None:
+            recid = None
+        else:
+            recid = dic['metadata']['control_number']
+        return recid
+
+    def linkConstructor(self,recid):
+        link = "https://inspirehep.net/record/" + str(recid)
+        return link
 
     def getPages(self,dic):
         if dic['metadata'].get('number_of_pages') is None:
@@ -180,7 +186,8 @@ class HepParser:
             abstract = self.getAbstract(dic)       
             id = self.getID(dic)     
             citationCount=self.getCitationCount(dic)
-
+            recid = self.getRecid(dic)
+            link = self.linkConstructor(recid)
 
             if author is not None:
                 singleArticle['FirstAuthor'] = author
@@ -212,6 +219,9 @@ class HepParser:
                 singleArticle['Source'] = f'https://inspirehep.net/literature/{id}'
             if citationCount is not None:
                 singleArticle['CitationCount'] = citationCount
+            if recid is not None:
+                singleArticle['Link'] = link
+
 
             singleArticle['Bibtex'] = self.convertToBibtex(singleArticle)
             singleArticle['DB'] = "https://inspirehep.net/"

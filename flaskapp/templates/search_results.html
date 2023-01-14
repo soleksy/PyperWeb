@@ -128,6 +128,7 @@ block content %}
             {% endif %}
             <form action="#" method="post">
                <input type="text" class="btn-check" name="info" value="{{count.value}}" />
+               <input type="hidden" name="currentPage" value="{{results.page}}">
                <button class="btn btn-outline-primary fs-6 fw-bold" type="submit" value="submit">
                More information
                </button>

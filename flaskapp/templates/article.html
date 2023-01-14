@@ -59,6 +59,10 @@ content%}
               <li class="list-group-item">
                 Pages : <b>{{ article.pages}} </b>
               </li>
+              {% endif %} {% if article.link %}
+              <li class="list-group-item">
+                Link : <a href = {{article.link}} >  {{ article.link}} </a>
+              </li>
               {% endif %}
             </ul>
           </section>

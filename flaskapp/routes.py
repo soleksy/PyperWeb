@@ -223,7 +223,7 @@ async def processData(searchQuery,sessionID):
                                     ,firstAuthor=article.get('FirstAuthor'), yearPublished=article.get('Year'),
                                     numberOfAuthors=article.get('AuthorCount'),journal=article.get('Journal'),
                                     volume=article.get('Volume'),pages=article.get('Pages'),DOI=article.get('Doi'),
-                                    eprint=article.get('Eprint'),bibtex=article.get('Bibtex'),user_id=sessionID))
+                                    eprint=article.get('Eprint'),bibtex=article.get('Bibtex'),link = article.get('Link') ,user_id=sessionID))
         db.session.commit()
 
         page = request.args.get('page',1,type=int)
@@ -265,10 +265,8 @@ def searchResults(searchQuery,page):
     
     #IF AN ARTICLE HAS BEEN CHOSEN
     elif request.method == "POST":
-
         articleID = request.form.get("info")
-        page = request.args.get('page',1,type=int)
-        
+        page = int(request.form.get("currentPage"))
         return redirect(url_for('articlePage',articleID=articleID,page=page))
 
     #SEARCH RESULT REFRESHED
@@ -299,24 +297,19 @@ def resetFilters():
 
 @app.route('/search_results/id=<articleID>/page=<page>')
 def articlePage(articleID,page):
-    page=1
+
     filters = session.get('FILTERS' , None)
     sessionID = session['user_id']
-    localArticles = Article.query.filter(Article.user_id==sessionID).paginate(page=page,per_page=ITEMS_PER_PAGE)
+    localArticles = Article.query.filter(Article.user_id==sessionID).paginate(page=int(page),per_page=ITEMS_PER_PAGE)
     
     if filters:
-        filteredArticleList = Article.query.filter(Article.yearPublished>=int(session.get('START_YEAR')),Article.yearPublished<=int(session.get('END_YEAR')),Article.user_id == sessionID).paginate(page=1,per_page=ITEMS_PER_PAGE)
-
+        filteredArticleList = Article.query.filter(Article.yearPublished>=int(session.get('START_YEAR')),Article.yearPublished<=int(session.get('END_YEAR')),Article.user_id == sessionID).paginate(page=int(page),per_page=ITEMS_PER_PAGE)
     if filters:
         article = filteredArticleList.items[int(articleID)]
         bibtex = filteredArticleList.items[int(articleID)].bibtex
     else:
-        if page== 1:
-            calculate_index = int(articleID)
-        else:
-            calculate_index = int(articleID)
-        article = localArticles.items[int(calculate_index)]
-        bibtex = localArticles.items[int(calculate_index)].bibtex
+        article = localArticles.items[int(articleID)]
+        bibtex = localArticles.items[int(articleID)].bibtex
 
     searchQuery = session['SEARCH_QUERY']
     return render_template('article.html' , bibtex=bibtex, article=article , ArticleID=articleID, searchQuery=searchQuery, page=page)
