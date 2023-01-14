@@ -2,6 +2,7 @@ import json
 from re import S
 from urllib.request import urlopen
 from pylatexenc.latex2text import LatexNodes2Text
+from datetime import datetime
 
 class HepHelper:
     def __init__(self,numOfArticles):
@@ -166,6 +167,20 @@ class HepParser:
         else:
             id = dic['metadata']['id']
         return id
+    
+    def getFullDate(self,dic):
+        if dic['metadata'].get("earliest_date") is None:
+            date = None
+        else:
+            date = dic['metadata'].get("earliest_date")
+            if len(date) == 4:
+                date = date + "-01-01"
+            elif len(date) == 7:
+                date = date + "-01"
+            
+            date = datetime.strptime(date, '%Y-%m-%d')
+            date = date.strftime('%Y-%m-%d')
+        return date
 
     
     def parseJsonFile(self):
@@ -188,6 +203,7 @@ class HepParser:
             citationCount=self.getCitationCount(dic)
             recid = self.getRecid(dic)
             link = self.linkConstructor(recid)
+            fullDate = self.getFullDate(dic)
 
             if author is not None:
                 singleArticle['FirstAuthor'] = author
@@ -221,6 +237,8 @@ class HepParser:
                 singleArticle['CitationCount'] = citationCount
             if recid is not None:
                 singleArticle['Link'] = link
+            if fullDate is not None:
+                singleArticle['FullDate'] = fullDate
 
 
             singleArticle['Bibtex'] = self.convertToBibtex(singleArticle)

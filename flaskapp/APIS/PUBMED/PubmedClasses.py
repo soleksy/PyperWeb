@@ -3,6 +3,7 @@ import json
 import xml
 from bs4 import BeautifulSoup
 from pylatexenc.latex2text import LatexNodes2Text
+from datetime import datetime
 
 
 class PubmedHelper:
@@ -52,6 +53,61 @@ class PubmedParser:
         self.ListOfBibtex = list()
 
         self.xml_data = source
+    def parseDate(self,article):
+        '''
+        Parse the date and return a list of dates
+        '''
+        Month_Map = {
+        'Jan': '01',
+        'Feb': '02',
+        'Mar': '03',
+        'Apr': '04',
+        'May': '05',
+        'Jun': '06',
+        'Jul': '07',
+        'Aug': '08',
+        'Sep': '09',
+        'Oct': '10',
+        'Nov': '11',
+        'Dec': '12'
+
+    }
+        if article.find('PubDate').find('Year') is None:
+            return None
+        else:
+            year = article.find('PubDate').find('Year')
+            if year is not None:
+                year = year.text
+
+            month = article.find('PubDate').find('Month')
+            if month is not None:
+                month = month.text
+
+            day = article.find('PubDate').find('Day')
+            if day is not None:
+                day = day.text
+
+            fullDate = ''
+            if year == None:
+                year = None
+            else:
+                fullDate += year
+
+                if month == None:
+                    fullDate += '-01-01'
+                else:
+                    fullDate += '-' + Month_Map[month]
+                    if day == None:
+                        fullDate += '-01'
+                    else:
+                        fullDate += '-' + day
+
+        if fullDate == '':
+            return None
+        else:
+            date = datetime.strptime(fullDate, '%Y-%m-%d')
+            dateStr = date.strftime('%Y-%m-%d')
+            return dateStr
 
     def parseArticleInfo(self):
         '''
@@ -110,6 +166,9 @@ class PubmedParser:
 
             if article.find('Year') is not None:
                 article_info['Year'] = int(article.find('Year').text)
+
+            fullDate = self.parseDate(article)
+            article_info['FullDate'] = fullDate
             
             article_info['Bibtex'] = self.convertToBibtex(article_info)
             article_info['DB'] = "https://www.ncbi.nlm.nih.gov/"

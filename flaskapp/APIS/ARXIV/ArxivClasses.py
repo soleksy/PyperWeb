@@ -2,6 +2,7 @@ import requests
 from xml.etree.ElementTree import fromstring, ElementTree
 import xml
 from bs4 import BeautifulSoup
+from datetime import datetime
 
 class ArxivHelper:
     data = ""
@@ -120,6 +121,24 @@ class ArxivParser:
         link_tag = soup.find('link', {'title': 'pdf'})
         pdf_link = link_tag['href']
         return pdf_link
+    
+    def getFullDate(self,entry):
+        if entry.find('published').text is not None:
+            published = entry.find('published').text
+
+            splitDateT = published.split('T')[0]
+            splitDateSpace = splitDateT.split(' ')[0]
+            if len(splitDateSpace) == 10:
+                splitDate = splitDateSpace
+            else:
+                splitDate = splitDateT
+            print(splitDate)
+            date = datetime.strptime(splitDate, '%Y-%m-%d')
+            publishedConverted = date.strftime( '%Y-%m-%d')
+        else:
+            publishedConverted = None
+        return publishedConverted
+
 
     def parseXML(self):
         singleArticle = dict()
@@ -137,6 +156,7 @@ class ArxivParser:
             singleArticle['Year'] = self.getDatePublished(entry)
             singleArticle['LastUpdate']= self.getLastUpdate(entry)
             singleArticle['Link'] = self.getLink(self.contents)
+            singleArticle['FullDate'] = self.getFullDate(entry)
 
 
             comment = self.getComment(entry)
