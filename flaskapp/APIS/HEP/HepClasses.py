@@ -1,9 +1,10 @@
 import json
-from re import S
 from urllib.request import urlopen
 from pylatexenc.latex2text import LatexNodes2Text
 from datetime import datetime
 import orjson
+import xmltodict
+from bs4 import BeautifulSoup
 
 class HepHelper:
     def __init__(self,numOfArticles):
@@ -38,213 +39,179 @@ class HepHelper:
 class HepParser:
 
     def __init__(self, source):
-
+        
         self.ListOfArticles = list()
         self.ListOfBibtex = list()
 
-        parsed = orjson.loads(source)
-        self.data = parsed["hits"]["hits"]
-    def getAuthor(self,dic):
-        author = dic['metadata'].get('first_author')
-        if author is not None:
-            author = author.get('full_name')
-        else:
-            author = None
-        return author
+        json_data = orjson.loads(source)
+        data = {'root': json_data}
+        xmlSource = xmltodict.unparse(data)
+        self.xmlSOURCE = xmlSource
 
-    def getAuthorCount(self,dic):
-        authorCount = dic['metadata'].get('author_count')
-        if authorCount is  None:
-            authorCount = None
-        return authorCount
-        
-    def getCitationCount(self,dic):
-        citationCount = dic['metadata'].get('citation_count')
-        if citationCount is None:
-            citationCount = 0
-        return citationCount
-
-    def getJournal(self,dic):
-        if dic['metadata'].get('publication_info') is None:
-            journal = None
-        elif isinstance(dic['metadata']['publication_info'], list):
-            if dic['metadata']['publication_info'][0].get("journal_title") is None:
-                journal = None
-            else:
-                journal = dic['metadata']['publication_info'][0]["journal_title"]
+        soup = BeautifulSoup(xmlSource, 'lxml')
+        root = soup.find('hits')
+        self.data = root
 
 
-        elif dic['metadata']['publication_info'].get("journal_title") is None:
-                journal = None
-        else:
-                journal = dic['metadata']['publication_info']["journal_title"]
+    def writeToXML(self, filename):
+        with open(filename, 'w') as f:
+            f.write(self.xmlSOURCE )
 
-        return journal
-    
-    def getTitle(self,dic):
-        if dic['metadata'].get('titles') is not None:
-            title = dic['metadata']['titles'][0]['title']
-        else:
-            title = None
-        return title
-    
-    def getAbstract(self,dic):
-        if dic['metadata'].get('abstracts') is None:
-            abstract = None
-        elif isinstance(dic['metadata']['abstracts'], list):
-            if dic['metadata']['abstracts'][0].get("value") is None:
-                abstract = None
-            else:
-                abstract = dic['metadata']['abstracts'][0]['value']
-        else:
-            abstract = dic['metadata']['abstracts']['value']
-        return abstract
-
-    def getDoi(self,dic):
-        if dic['metadata'].get('dois') is not None:
-                Doi = dic['metadata']['dois'][0]['value']
-        else:
-            Doi = None
-        return Doi
-    def getYear(self,dic):
-        if dic['metadata'].get('publication_info') is not None:
-            if(type(dic["metadata"]['publication_info'])) == list:
-                    year = dic["metadata"]['publication_info'][0].get("year")
-            else:
-                year = dic["metadata"]['publication_info'].get("year")
-        else:
-            year = 0
-        return year
-        
-    
-    def getCollaboration(self,dic):
-        if dic['metadata'].get('collaborations') is None:
-            collaboration = None
-        elif isinstance(dic['metadata']['collaborations'], list):
-            collaboration = ""
-            for el in dic['metadata']['collaborations']:
-                collaboration += el['value'] + " "
-        else:
-            collaboration = dic['metadata']['collaborations']['value']
-
-        return collaboration
-
-    def getRecid(self,dic):
-        if dic['metadata'].get('control_number') is None:
-            recid = None
-        else:
-            recid = dic['metadata']['control_number']
-        return recid
-
-    def linkConstructor(self,recid):
-        link = "https://inspirehep.net/record/" + str(recid)
-        return link
-
-    def getPages(self,dic):
-        if dic['metadata'].get('number_of_pages') is None:
-            pages = None
-        else:
-            pages = dic['metadata']['number_of_pages']
-        return pages
-
-    def getVolume(self,dic):
-        if dic['metadata'].get('publication_info') is None:
-            volume = None
-        else:
-            volume = dic['metadata']['publication_info'][0].get("journal_volume")
-        return volume
-
-    def getEprint(self,dic):
-        if dic['metadata'].get('arxiv_eprints') is None:
-            eprint = None
-        else:
-            eprint = dic['metadata']['arxiv_eprints'][0].get("value")
-
-        return eprint
-
-    def getID(self,dic):
-        if dic['metadata'].get('id') is None:
-            id = None
-        else:
-            id = dic['metadata']['id']
-        return id
-    
-    def getFullDate(self,dic):
-        if dic['metadata'].get("earliest_date") is None:
-            return None
-        else:
-            date = dic['metadata'].get("earliest_date")
-            if len(date) == 4:
-                date = date + "-01-01"
-            elif len(date) == 7:
-                date = date + "-01"
-            
-            date = datetime.strptime(date, '%Y-%m-%d')
-            date = date.strftime('%Y-%m-%d')
-        return date
-
-    
-    def parseJsonFile(self):
+    def parseXml(self):
         singleArticle = dict()
-        for dic in self.data:
-            author = self.getAuthor(dic)
-            authorCount = self.getAuthorCount(dic)
-            journal = self.getJournal(dic)
-            title = self.getTitle(dic)
-            year = self.getYear(dic)
-            doi = self.getDoi(dic)
-            collaboration = self.getCollaboration(dic)
-            pages = self.getPages(dic)
-            volume = self.getVolume(dic)
-            eprint = self.getEprint(dic)
-            abstract = self.getAbstract(dic)       
-            id = self.getID(dic)     
-            citationCount=self.getCitationCount(dic)
-            recid = self.getRecid(dic)
-            link = self.linkConstructor(recid)
-            fullDate = self.getFullDate(dic)
+        for i , article in enumerate(self.data.find_all('hits')):
 
-            if author is not None:
-                singleArticle['FirstAuthor'] = author
+            metadata = article.find('metadata')
+            publication_info = metadata.find('publication_info')
+
+            #getFistAuthor
+
+            firstAuthor = metadata.find('first_author')
+            if firstAuthor is not None:
+                singleArticle['FirstAuthor'] = firstAuthor.find('full_name').text
             else:
                 singleArticle['FirstAuthor'] = None
+
+            #getAuthorCount
+
+            authorCount = metadata.find('author_count')
             if authorCount is not None:
-                singleArticle['AuthorCount'] = authorCount
-            if journal is not None:
-                singleArticle['Journal'] = journal
-            if title is not None:
-                singleArticle['Title'] = LatexNodes2Text().latex_to_text(title)
-            if year is not None:
-                singleArticle['Year'] = int(year)
+                singleArticle['AuthorCount'] = int(authorCount.text)
+            else:
+                singleArticle['AuthorCount'] = None
+
+            #getJournal
+
+            if publication_info is None:
+                singleArticle['Journal'] = None
+            elif isinstance(publication_info, list):
+                journalTitle = publication_info[0].find('journal_title')
+
+                if journalTitle is not None:
+                    singleArticle['Journal'] = journalTitle.text
+                else:
+                    singleArticle['Journal'] = None
+            else:
+                journalTitle = publication_info.find('journal_title')
+                if journalTitle is not None:
+                    singleArticle['Journal'] = journalTitle.text
+                else:
+                    singleArticle['Journal'] = None
+
+            #getTitle
+
+            titles = metadata.find('titles')
+            if titles is not None:
+                singleArticle['Title'] = titles.find('title').text
+            else:
+                singleArticle['Title'] = None
+
+            #getYear
+
+            if publication_info is not None:
+                if isinstance(publication_info, list):
+                    year = publication_info[0].find('year')
+                    if year is not None:
+                        singleArticle['Year'] = year.text
+                    else:
+                        singleArticle['Year'] = 0
+                else:
+                    year = publication_info.find('year')
+                    if year is not None:
+                        singleArticle['Year'] = year.text
+                    else:
+                        singleArticle['Year'] = 0
             else:
                 singleArticle['Year'] = 0
-            if doi is not None:
-                singleArticle['Doi'] = doi
-            if collaboration is not None:
-                singleArticle['Collaboration'] = collaboration
+            #getDoi
+            dois = metadata.find('dois')
+            if dois is not None:
+                singleArticle['Doi'] = dois.find('value').text
+            else:
+                singleArticle['Doi'] = None
+            
+            #getCollaboration
+            collaborations = metadata.find('collaborations')
+            if collaborations is not None:
+                if isinstance(collaborations, list):
+                    collaborations = "".join([collaboration.find('value').text for collaboration in collaborations])
+                    singleArticle['Collaboration'] = collaborations
+                else:
+                    singleArticle['Collaboration'] = collaborations.find('value').text
+            else:
+                singleArticle['Collaboration'] = None
+
+            #getPages
+            pages = metadata.find('number_of_pages')
             if pages is not None:
-                singleArticle['Pages'] = pages
+                singleArticle['Pages'] = pages.text
+            else:
+                singleArticle['Pages'] = None
+            
+            #getVolume
+            if publication_info is not None:
+                volume = publication_info.find('volume')
             if volume is not None:
-                singleArticle['Volume'] = volume
+                singleArticle['Volume'] = publication_info[0].find('journal_volume').text
+            else:
+                singleArticle['Volume'] = None
+
+            #getEprint
+            eprint = metadata.find('arxiv_eprints')
             if eprint is not None:
-                singleArticle['Eprint'] = eprint
-            if abstract is not None:
-                singleArticle['Summary'] = LatexNodes2Text().latex_to_text(abstract)
-            if id is not None:
-                singleArticle['Source'] = f'https://inspirehep.net/literature/{id}'
+                singleArticle['Eprint'] = eprint.find('value').text
+            else:
+                singleArticle['Eprint'] = None
+            
+            #getAbstract
+            abstracts = metadata.find('abstracts')
+            if abstracts is not None:
+                if isinstance(abstracts,list):
+                    if abstracts[0].find('value') is not None:
+                        singleArticle['Summary'] = abstracts[0].find('value').text
+                    else:
+                        singleArticle['Summary'] = None
+                else:
+                    singleArticle['Summary'] = abstracts.find('value').text
+            else:
+                singleArticle['Summary'] = None
+            
+            #getCitationCount
+            citationCount = metadata.find('citation_count')
             if citationCount is not None:
-                singleArticle['CitationCount'] = citationCount
+                singleArticle['CitationCount'] = citationCount.text
+            else:
+                singleArticle['CitationCount'] = 0
+            #getID & Source
+            id = metadata.find('id')
+            if id is not None:
+                singleArticle['Source'] = f'https://inspirehep.net/literature/{id.text}'
+            #getRecid & Link 
+            recid = metadata.find('control_number')
             if recid is not None:
-                singleArticle['Link'] = link
-            if fullDate is not None:
-                singleArticle['FullDate'] = fullDate
+                singleArticle['Link'] = f'https://inspirehep.net/record/{str(recid.text)}'
+
+            #fullDate
+            earliestDate = metadata.find('earliest_date')
+            if earliestDate is not None:
+                date = earliestDate.text
+                
+                if len(date) == 4:
+                     date += "-01-01"
+                elif len(date) == 7:
+                     date += "-01"
+
+                date = datetime.strptime(date, "%Y-%m-%d")
+                date = date.strftime("%Y-%m-%d")
+                singleArticle['FullDate'] = date
+            else:
+                singleArticle['FullDate'] = None
 
 
             singleArticle['Bibtex'] = self.convertToBibtex(singleArticle)
             singleArticle['DB'] = "https://inspirehep.net/"
             self.ListOfArticles.append(singleArticle.copy())
             singleArticle.clear()
-
     def convertToBibtex(self,article):
         singleBibtex = dict()
 

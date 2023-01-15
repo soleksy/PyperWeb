@@ -195,7 +195,6 @@ async def processData(searchQuery,sessionID):
         await client.aclose()
 
 
-
     if arxiv:
         arxivParser = ArxivParser(dbToSearch[index].content)
         arxivParser.standardizeXml()
@@ -204,7 +203,7 @@ async def processData(searchQuery,sessionID):
         index += 1
     if hep:
         hepParser = HepParser(dbToSearch[index].content)
-        hepParser.parseJsonFile()
+        hepParser.parseXml()
         hepArticleList = hepParser.ListOfArticles
         index += 1
     if pubmed:
