@@ -16,7 +16,6 @@ from flaskapp.forms import InfoForm
 from flaskapp.models import Article , User
 
 from datetime import datetime
-import time
 
 def sortByDateAscending(list):
     return sorted(list,key=lambda x:x['FullDate'] , reverse=False)
@@ -178,11 +177,12 @@ async def processData(searchQuery,sessionID):
         arxivHelper = ArxivHelper(NUMOFARTICLES)
         url = arxivHelper.allParamSearch(searchQuery)
         listOfApiCalls.append(retrieveData(url))
+        
     if hep:
         hepHelper = HepHelper(NUMOFARTICLES)
         url = hepHelper.hepUrlGenerator(searchQuery)
         listOfApiCalls.append(retrieveData(url))
-    
+
     if pubmed:
         pubmedHelper = PubmedHelper(NUMOFARTICLES)
         url = pubmedHelper.pubmedURLGenerator(searchQuery)
@@ -202,13 +202,11 @@ async def processData(searchQuery,sessionID):
         arxivParser.parseXML()
         arxivArticleList = arxivParser.ListOfArticles
         index += 1
-
     if hep:
         hepParser = HepParser(dbToSearch[index].content)
         hepParser.parseJsonFile()
         hepArticleList = hepParser.ListOfArticles
         index += 1
-        
     if pubmed:
         pubmedParser = PubmedParser(dbToSearch[index].content)
         pubmedParser.parseArticleInfo()
@@ -252,7 +250,6 @@ def searchResults(searchQuery,page):
 
     #IF FILTERS WERE APPLIED
     if form.validate_on_submit():
-
         session['FILTERS'] = True
         
         session['DATE_START'] = form.startDate.data.strftime("%Y/%m/%d")
@@ -281,7 +278,6 @@ def searchResults(searchQuery,page):
         filters = session.get('FILTERS', None)
         if filters:
             filteredArticles = Article.query.filter(Article.fullDate>=session.get('START_YEAR'),Article.fullDate<=session.get('END_YEAR'),Article.user_id == sessionID).paginate(page=page,per_page=ITEMS_PER_PAGE) 
-            print(session['START_DATE'])
             return render_template('search_results.html' ,  results=filteredArticles, searchQuery=searchQuery ,form=form,startDate=session['DATE_START'],endDate=session['DATE_END'])
         
         if session['SEARCH'] == False:

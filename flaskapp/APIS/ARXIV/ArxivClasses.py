@@ -1,9 +1,7 @@
 import requests
-from xml.etree.ElementTree import fromstring, ElementTree
-import xml
 from bs4 import BeautifulSoup
 from datetime import datetime
-
+from ...constants import NUMOFARTICLES
 class ArxivHelper:
     data = ""
     def __init__(self , numOfArticles):
@@ -45,120 +43,100 @@ class ArxivParser:
         self.ListOfArticles = list()
         self.contents = contents
 
-
-    def getComment(self,entry):
-        if entry.find('comment') is not None:
-            comment = entry.find('comment').text
-        else:
-            comment = None
-        return comment
-
-    def getJournal(self, entry):
-        if entry.find('journal_ref') is not None:
-            journal = entry.find('journal_ref').text
-        else:
-            journal = None
-        return journal
-
-    def getDoi(self, entry):
-        if entry.find('doi') is not None:
-            doi = entry.find('doi').text
-        else:
-            doi = None
-        return doi
-    
-    def getAuthors(self, entry):
-        authorList = entry.findall('author')
-        firstAuthor= authorList[0].find('name').text
-        return firstAuthor
-
-    def getEprint(self, entry):
-        if entry.find('id').text is not None:
-            ID = entry.find('id').text
-            ID = ID[:-2]  
-        else:
-            ID= None
-
-        return ID
-
-    def getTitle(self, entry):
-        if entry.find('title').text is not None:
-            title = entry.find('title').text     
-        else:
-            title= None
-        return title
-
-    def getDatePublished(self, entry):
-        if entry.find('published').text is not None:
-            published = int(entry.find('published').text.split("-", 1)[0])    
-        else:
-            published=0
-        return published 
-
-    def getLastUpdate(self, entry):
-        if entry.find('updated').text is not None:
-            updated = entry.find('updated').text
-        else:
-            updated = None
-        
-        return updated
-
-    def getSummary(self,entry):
-        if entry.find('summary').text is not None:
-            summary = entry.find('summary').text
-        else:
-            summary = None
-        return summary
-
-    def getID(self,entry):
-        if entry.find('id').text is not None:
-            id = entry.find('id').text
-        else:
-            id = None
-        return id
-    def getLink(self,contents):
-        soup = BeautifulSoup(contents, features="xml")
-        link_tag = soup.find('link', {'title': 'pdf'})
-        pdf_link = link_tag['href']
-        return pdf_link
-    
-    def getFullDate(self,entry):
-        if entry.find('published').text is not None:
-            published = entry.find('published').text
-
-            splitDateT = published.split('T')[0]
-            splitDateSpace = splitDateT.split(' ')[0]
-            if len(splitDateSpace) == 10:
-                splitDate = splitDateSpace
-            else:
-                splitDate = splitDateT
-            date = datetime.strptime(splitDate, '%Y-%m-%d')
-            publishedConverted = date.strftime( '%Y-%m-%d')
-        else:
-            publishedConverted = None
-        return publishedConverted
-
-
     def parseXML(self):
-        singleArticle = dict()
-        tree = ElementTree(fromstring(self.contents))
-        root = tree.getroot()
-        entries = root.findall('entry')
+        soup = BeautifulSoup(self.contents, features="xml")
+        for i , article in enumerate(soup.findAll('entry')):
+            singleArticle = dict()
 
-        for entry in entries:
-            singleArticle['Journal'] = self.getJournal(entry)
-            singleArticle['Doi'] = self.getDoi(entry)
-            singleArticle['FirstAuthor'] = self.getAuthors(entry)
-            singleArticle['Eprint'] = self.getEprint(entry)
-            singleArticle['AuthorCount'] = len(self.getAuthors(entry))
-            singleArticle['Title'] = self.getTitle(entry)
-            singleArticle['Year'] = self.getDatePublished(entry)
-            singleArticle['LastUpdate']= self.getLastUpdate(entry)
-            singleArticle['Link'] = self.getLink(self.contents)
-            singleArticle['FullDate'] = self.getFullDate(entry)
+            #Find Journal
+            journal = article.find('journal_ref')
+            if journal is not None:
+                journal = journal.text
+            singleArticle['Journal'] = journal
 
+            #Find DOI
+            doi = article.find('doi')
+            if doi is not None:
+                doi = doi.text
+            singleArticle['Doi'] = doi
 
-            comment = self.getComment(entry)
+            #Find First Author
+            authorList = article.find('author')
+            if len(authorList) > 0:
+                firstAuthor= authorList.find('name').text
+            else:
+                firstAuthor = None
+            singleArticle['FirstAuthor'] = firstAuthor
+
+            #Find Number of Authors
+            singleArticle['AuthorCount'] = len(authorList)
+
+            #Find Eprint
+            eprint = article.find('id')
+            if eprint is not None:
+                eprint = eprint.text
+                eprint = eprint[:-2]
+            singleArticle['Eprint'] = eprint
+
+            #Find Title
+            title = article.find('title')
+            if title is not None:
+                title = title.text
+            singleArticle['Title'] = title
+
+            #Find Year
+            year = article.find('published')
+            if year is not None:
+                year = int(year.text.split("-", 1)[0])
+            else:
+                year = 0
+            singleArticle['Year'] = year
+
+            #Find Last Update
+            lastUpdate = article.find('updated')
+            if lastUpdate is not None:
+                lastUpdate = lastUpdate.text
+            singleArticle['LastUpdate'] = lastUpdate
+
+            #Find Link
+            link_tag = article.find('link', {'title': 'pdf'})
+            if link_tag is not None:
+                pdf_link = link_tag['href']
+            singleArticle['Link'] = pdf_link
+
+            #Find Full Date
+            fullDate = article.find('published')
+            if fullDate is not None:
+                published = fullDate.text
+
+                splitDateT = published.split('T')[0]
+                splitDateSpace = splitDateT.split(' ')[0]
+                if len(splitDateSpace) == 10:
+                    splitDate = splitDateSpace
+                else:
+                    splitDate = splitDateT
+                date = datetime.strptime(splitDate, '%Y-%m-%d')
+                publishedConverted = date.strftime( '%Y-%m-%d')
+            singleArticle['FullDate'] = publishedConverted
+
+            #Find Summary
+            summary = article.find('summary')
+            if summary is not None:
+                summary = summary.text
+            singleArticle['Summary'] = summary
+
+            #Find ID
+            id = article.find('id')
+            if id is not None:
+                id = id.text
+            singleArticle['Source'] = id
+
+            #Find Comment
+            comment = article.find('comment')
+            if comment is not None:
+                comment = comment.text
+            singleArticle['Comment'] = comment
+
             if comment is None:
                 numberOfPages = None
             else:
@@ -168,18 +146,14 @@ class ArxivParser:
                 else:
                     numberOfPages = comment[pagesOccurence-3:pagesOccurence]
 
-            singleArticle['Comment'] = self.getComment(entry)
-            singleArticle['Pages'] = numberOfPages
-
-
-            singleArticle['Summary'] = self.getSummary(entry)
-            singleArticle['Source'] = self.getID(entry) 
+            singleArticle['NumberOfPages'] = numberOfPages
+            
             singleArticle['Bibtex'] = self.convertToBibtex(singleArticle)
             singleArticle['DB'] = "https://arxiv.org/"
 
             self.ListOfArticles.append(singleArticle.copy())
-            singleArticle.clear()
-
+            singleArticle.clear()            
+        
 
     def convertToBibtex(self,article):  
         singleBibtex = dict()
@@ -260,7 +234,6 @@ class ArxivParser:
         self.contents = self.contents.replace('arxiv:', '')
         self.contents = self.contents.replace(
             ' xmlns:arxiv="http://arxiv.org/schemas/atom"', '')
-
     def filterRange(self, range):
         temp_list = list()
         year = 0

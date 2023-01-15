@@ -3,6 +3,7 @@ from re import S
 from urllib.request import urlopen
 from pylatexenc.latex2text import LatexNodes2Text
 from datetime import datetime
+import orjson
 
 class HepHelper:
     def __init__(self,numOfArticles):
@@ -41,28 +42,27 @@ class HepParser:
         self.ListOfArticles = list()
         self.ListOfBibtex = list()
 
-        self.data = json.loads(source)
-        self.data = self.data["hits"]["hits"]
-
+        parsed = orjson.loads(source)
+        self.data = parsed["hits"]["hits"]
     def getAuthor(self,dic):
-        if dic['metadata'].get('first_author') is not None:
-            author = dic['metadata']['first_author'].get('full_name')
+        author = dic['metadata'].get('first_author')
+        if author is not None:
+            author = author.get('full_name')
         else:
             author = None
         return author
 
     def getAuthorCount(self,dic):
-        if dic['metadata'].get('author_count') is not None:
-            authorCount = dic['metadata']['author_count']
-        else:
-            authorCount = None;
+        authorCount = dic['metadata'].get('author_count')
+        if authorCount is  None:
+            authorCount = None
         return authorCount
         
     def getCitationCount(self,dic):
-        if(dic['metadata'].get('citation_count') is None):
+        citationCount = dic['metadata'].get('citation_count')
+        if citationCount is None:
             citationCount = 0
-        else:
-            citationCount = dic['metadata']['citation_count']
+        return citationCount
 
     def getJournal(self,dic):
         if dic['metadata'].get('publication_info') is None:
@@ -186,9 +186,7 @@ class HepParser:
     
     def parseJsonFile(self):
         singleArticle = dict()
-         
         for dic in self.data:
-        
             author = self.getAuthor(dic)
             authorCount = self.getAuthorCount(dic)
             journal = self.getJournal(dic)
@@ -245,7 +243,6 @@ class HepParser:
             singleArticle['Bibtex'] = self.convertToBibtex(singleArticle)
             singleArticle['DB'] = "https://inspirehep.net/"
             self.ListOfArticles.append(singleArticle.copy())
-            
             singleArticle.clear()
 
     def convertToBibtex(self,article):

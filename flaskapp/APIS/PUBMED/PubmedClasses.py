@@ -1,10 +1,8 @@
 import requests
 import json
-import xml
 from bs4 import BeautifulSoup
 from pylatexenc.latex2text import LatexNodes2Text
 from datetime import datetime
-
 
 class PubmedHelper:
     def __init__(self , numOfArticles):
@@ -114,61 +112,81 @@ class PubmedParser:
         author, list of authors, journal, article title, abstract, doi,year, volume
         '''
         soup = BeautifulSoup(self.xml_data ,features="xml")
-        articles_info = []
         for i , article in enumerate(soup.find_all('PubmedArticle')):
             article_info = {}
-            if article.find('ArticleTitle') is not None:
-                article_info['Title'] = article.find('ArticleTitle').text
 
-            if article.find('Abstract') is not None:
-                article_info['Summary'] = article.find('Abstract').text
+            articleTitle = article.find('ArticleTitle')
+            if articleTitle is not None:
+                article_info['Title'] = articleTitle.text
+            
+            abstract = article.find('Abstract')
+            if abstract is not None:
+                article_info['Summary'] = abstract.text
+            else:
+                article_info['Summary'] = ''
 
-            if article.find('ELocationID') is not None and article.find('ELocationID' , {'EIdType': 'doi'}) is not None:
-                article_info['Doi'] = article.find('ELocationID' , {'EIdType': 'doi'}).text
-            if article.find('ArticleId' ,{'IdType': "pubmed"}) is not None:
-                ArticleID = article.find('ArticleId' ,{'IdType': "pubmed"}).text
+            doi = article.find('ELocationID' , {'EIdType': 'doi'})
+            if doi is not None:
+                article_info['Doi'] = doi.text
+
+
+            link = article.find('ArticleId' ,{'IdType': "doi"})
+            if link is not None:
+                ArticleID = link.text
                 article_info['Link'] = "https://www.ncbi.nlm.nih.gov/pubmed/" + ArticleID
 
-            if article.find('AuthorList') is None:
+            authorList = article.find('AuthorList')
+            
+            if authorList is None:
                 article_info['FirstAuthor'] = ''
             else:
-                if article.find('AuthorList').find('ForeName') is not None:
-                    foreName = article.find('AuthorList').find('ForeName').text
+                foreName = authorList.find('ForeName')
+
+                if foreName is not None:
+                    foreName = foreName.text
                 else:
                     foreName = ''
+                lastName = authorList.find('LastName')
 
-                if article.find('AuthorList').find('LastName') is not None:
-                    lastName = article.find('AuthorList').find('LastName').text
+                if lastName is not None:
+                    lastName = lastName.text
                 else:
                     lastName = ''
 
                 article_info['FirstAuthor'] = foreName + ' ' + lastName
+            
 
-            if article.find('AuthorList') is not None:
+
+            if authorList is not None:
                 Authors = [author for author in article.find('AuthorList').find_all('Author')]
                 author_list = []
                 for author in Authors:
-                    if author.find('ForeName') is not None:
-                        foreName = author.find('ForeName').text
+                    authorForeName = author.find('ForeName')
+                    if authorForeName is not None:
+                        foreName = authorForeName.text
                     else:
                         foreName = ''
-                    if author.find('LastName') is not None:
-                        lastName = author.find('LastName').text
+                    authorLastName = author.find('LastName')
+                    if authorLastName is not None:
+                        lastName = authorLastName.text
                     else:
                         lastName = ''
                     author = foreName + ' ' + lastName
                     author_list.append(author)
                 article_info['authors'] = author_list
-                article_info['author_count'] = len(author_list)   
+                article_info['author_count'] = len(author_list)
+               
+            journal = article.find('Title')
+            if journal is not None:
+                article_info['Journal'] = journal.text
 
-            if article.find('Title') is not None:
-                article_info['Journal'] = article.find('Title').text
-
-            if article.find('Volume') is not None:
-                article_info['Volume'] = article.find('Volume').text
-
-            if article.find('Year') is not None:
-                article_info['Year'] = int(article.find('Year').text)
+            volume=article.find('Volume')
+            if volume is not None:
+                article_info['Volume'] = volume.text
+            
+            year = article.find('Year')
+            if year is not None:
+                article_info['Year'] = int(year.text)
 
             fullDate = self.parseDate(article)
             article_info['FullDate'] = fullDate
@@ -176,7 +194,6 @@ class PubmedParser:
             article_info['Bibtex'] = self.convertToBibtex(article_info)
             article_info['DB'] = "https://www.ncbi.nlm.nih.gov/"
             self.ListOfArticles.append(article_info)
-
 
 
         '''return a list of dictionaries containing the bibtex for each article'''
