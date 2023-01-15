@@ -63,6 +63,10 @@ content%}
               <li class="list-group-item">
                 Link : <a href = {{article.link}} >  {{ article.link}} </a>
               </li>
+              {% endif %} {% if article.fullDate %}
+              <li class="list-group-item">
+                Publication Date : {{ article.fullDate}} 
+              </li>
               {% endif %}
             </ul>
           </section>

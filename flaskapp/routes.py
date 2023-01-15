@@ -255,19 +255,20 @@ def searchResults(searchQuery,page):
 
         session['FILTERS'] = True
         
-        session['START_DATE'] = form.startDate.data.strftime("%m/%d/%Y")
-        session['END_DATE'] = form.endDate.data.strftime("%m/%d/%Y")
-        session['START_YEAR'] = int(form.startDate.data.strftime("%Y"))
-        session['END_YEAR'] = int(form.endDate.data.strftime("%Y"))
+        session['DATE_START'] = form.startDate.data.strftime("%Y/%m/%d")
+        session['DATE_END'] = form.endDate.data.strftime("%Y/%m/%d")
+
+        session['START_YEAR'] = datetime.strptime(session['DATE_START'], "%Y/%m/%d")
+        session['END_YEAR'] = datetime.strptime(session['DATE_END'], "%Y/%m/%d")
               
-        filteredArticles = Article.query.filter(Article.yearPublished>=int(session.get('START_YEAR')),Article.yearPublished<=int(session.get('END_YEAR')),Article.user_id == sessionID).paginate(page=1,per_page=ITEMS_PER_PAGE)
+        filteredArticles = Article.query.filter(Article.fullDate>=session.get('START_YEAR'),Article.fullDate<=session.get('END_YEAR'),Article.user_id == sessionID).paginate(page=1,per_page=ITEMS_PER_PAGE)
     
         if len(filteredArticles.items) == 0:
             error = "No results for the submited date range"
             session['FILTERS'] = False
             return redirect(url_for('errorPage' , error=error))
         else:
-            return render_template('search_results.html' ,  results=filteredArticles, searchQuery=searchQuery ,form=form,startDate=startDate,endDate=endDate,page=1)
+            return render_template('search_results.html' ,  results=filteredArticles, searchQuery=searchQuery ,form=form,startDate=session['DATE_START'],endDate=session['DATE_END'],page=1)
     
     #IF AN ARTICLE HAS BEEN CHOSEN
     elif request.method == "POST":
@@ -279,10 +280,11 @@ def searchResults(searchQuery,page):
     else:
         filters = session.get('FILTERS', None)
         if filters:
-            filteredArticles = Article.query.filter(Article.yearPublished>=int(session.get('START_YEAR')),Article.yearPublished<=int(session.get('END_YEAR')),Article.user_id == sessionID).paginate(page=page,per_page=ITEMS_PER_PAGE) 
-            return render_template('search_results.html' ,  results=filteredArticles, searchQuery=searchQuery ,form=form,startDate= session['START_DATE'],endDate=session['END_DATE'])
+            filteredArticles = Article.query.filter(Article.fullDate>=session.get('START_YEAR'),Article.fullDate<=session.get('END_YEAR'),Article.user_id == sessionID).paginate(page=page,per_page=ITEMS_PER_PAGE) 
+            print(session['START_DATE'])
+            return render_template('search_results.html' ,  results=filteredArticles, searchQuery=searchQuery ,form=form,startDate=session['DATE_START'],endDate=session['DATE_END'])
         
-        if session["SEARCH"] == False:
+        if session['SEARCH'] == False:
             startDate = None
             endDate = None
             page = request.args.get('page',1,type=int)
@@ -309,7 +311,7 @@ def articlePage(articleID,page):
     localArticles = Article.query.filter(Article.user_id==sessionID).paginate(page=int(page),per_page=ITEMS_PER_PAGE)
     
     if filters:
-        filteredArticleList = Article.query.filter(Article.yearPublished>=int(session.get('START_YEAR')),Article.yearPublished<=int(session.get('END_YEAR')),Article.user_id == sessionID).paginate(page=int(page),per_page=ITEMS_PER_PAGE)
+        filteredArticleList = Article.query.filter(Article.fullDate>=session.get('START_YEAR'),Article.fullDate<=session.get('END_YEAR'),Article.user_id == sessionID).paginate(page=int(page),per_page=ITEMS_PER_PAGE)
     if filters:
         article = filteredArticleList.items[int(articleID)]
         bibtex = filteredArticleList.items[int(articleID)].bibtex

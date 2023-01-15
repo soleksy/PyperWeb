@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
 <script>
@@ -167,7 +166,7 @@ block content %}
             <section>
                {{ form.csrf_token }}
                <b>{{ form.startDate.label }}</b><br/>
-               {{form.startDate(class='datepicker')}}
+               {{form.startDate(class='datepicker', default=startDate)}}
                {{form.hidden_tag()}}
             </section>
             <section>
