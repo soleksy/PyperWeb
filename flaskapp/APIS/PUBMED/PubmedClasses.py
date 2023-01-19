@@ -130,7 +130,7 @@ class PubmedParser:
                 article_info['Doi'] = doi.text
 
 
-            link = article.find('ArticleId' ,{'IdType': "doi"})
+            link = article.find('ArticleId' ,{'IdType': "pubmed"})
             if link is not None:
                 ArticleID = link.text
                 article_info['Link'] = "https://www.ncbi.nlm.nih.gov/pubmed/" + ArticleID

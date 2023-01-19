@@ -80,23 +80,6 @@ class HepParser:
             else:
                 singleArticle['AuthorCount'] = None
 
-            #getJournal
-
-            if publication_info is None:
-                singleArticle['Journal'] = None
-            elif isinstance(publication_info, list):
-                journalTitle = publication_info[0].find('journal_title')
-
-                if journalTitle is not None:
-                    singleArticle['Journal'] = journalTitle.text
-                else:
-                    singleArticle['Journal'] = None
-            else:
-                journalTitle = publication_info.find('journal_title')
-                if journalTitle is not None:
-                    singleArticle['Journal'] = journalTitle.text
-                else:
-                    singleArticle['Journal'] = None
 
             #getTitle
 
@@ -106,23 +89,6 @@ class HepParser:
             else:
                 singleArticle['Title'] = None
 
-            #getYear
-
-            if publication_info is not None:
-                if isinstance(publication_info, list):
-                    year = publication_info[0].find('year')
-                    if year is not None:
-                        singleArticle['Year'] = year.text
-                    else:
-                        singleArticle['Year'] = 0
-                else:
-                    year = publication_info.find('year')
-                    if year is not None:
-                        singleArticle['Year'] = year.text
-                    else:
-                        singleArticle['Year'] = 0
-            else:
-                singleArticle['Year'] = 0
             #getDoi
             dois = metadata.find('dois')
             if dois is not None:
@@ -148,13 +114,55 @@ class HepParser:
             else:
                 singleArticle['Pages'] = None
             
-            #getVolume
+
+            #get Journal and Year
             if publication_info is not None:
-                volume = publication_info.find('volume')
-            if volume is not None:
-                singleArticle['Volume'] = publication_info[0].find('journal_volume').text
+                if isinstance(publication_info, list):
+
+                    journalTitle = publication_info[0].find('journal_title')
+                    year = publication_info[0].find('year')
+                    volume = publication_info[0].find('volume')
+
+                    if journalTitle is not None:
+                        singleArticle['Journal'] = journalTitle.text
+                    else:
+                        singleArticle['Journal'] = None
+
+                    if year is not None:
+                        singleArticle['Year'] = year.text
+                    else:
+                        singleArticle['Year'] = 0
+
+                    if volume is not None:
+                            singleArticle['Volume'] = volume.text
+                    else:
+                        singleArticle['Volume'] = None
+
+                else:
+                    journalTitle = publication_info.find('journal_title')
+                    year = publication_info.find('year')
+                    volume = publication_info.find('volume')
+
+                    if journalTitle is not None:
+                        singleArticle['Journal'] = journalTitle.text
+                    else:
+                        singleArticle['Journal'] = None
+                        
+                    if year is not None:
+                        singleArticle['Year'] = year.text
+                    else:
+                        singleArticle['Year'] = 0
+
+                    if volume is not None:
+                            singleArticle['Volume'] = volume.text
+                    else:
+                        singleArticle['Volume'] = None
             else:
-                singleArticle['Volume'] = None
+                journalTitle = None
+                year = None
+                volume = None
+
+
 
             #getEprint
             eprint = metadata.find('arxiv_eprints')
