@@ -158,9 +158,9 @@ class HepParser:
                     else:
                         singleArticle['Volume'] = None
             else:
-                journalTitle = None
-                year = None
-                volume = None
+                singleArticle['Journal'] = ''
+                singleArticle['Year'] = ''
+                singleArticle['Volume'] = ''
 
 
 

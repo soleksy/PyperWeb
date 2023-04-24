@@ -35,6 +35,7 @@ class PubmedHelper:
         params = {'db': 'pubmed', 'id': ','.join(article_ids), 'rettype': rettype, 'retmode': retmode}
         full_url = base_url + '?' + '&'.join([f'{key}={value}' for key, value in params.items()])
         response = requests.get(full_url)
+        
         return response.text
 
     def apiToFile(self,response , filename , retmode):
@@ -68,10 +69,16 @@ class PubmedParser:
         'Oct': '10',
         'Nov': '11',
         'Dec': '12'
-
     }
         if article.find('PubDate').find('Year') is None:
-            return None
+            if article.find('DateCompleted').find('Year') is None:
+                return None
+            else:
+                year = article.find('DateCompleted').find('Year').text
+                month = article.find('DateCompleted').find('Month').text
+                day = article.find('DateCompleted').find('Day').text
+                fullDate = year + '-' + month + '-' + day
+        
         else:
             year = article.find('PubDate').find('Year')
             if year is not None:
@@ -99,9 +106,12 @@ class PubmedParser:
                         fullDate += '-01'
                     else:
                         fullDate += '-' + day
-
+        
         if fullDate == '':
             return None
+        elif fullDate == None:
+            return None
+
         else:
             date = datetime.strptime(fullDate, '%Y-%m-%d')
             dateStr = date.strftime('%Y-%m-%d')

@@ -221,11 +221,14 @@ async def processData(searchQuery,sessionID):
     else:
         articleList = []
         for article in articles:
+            
+            date = datetime.strptime(article.get('FullDate'), '%Y-%m-%d')
+
             articleList.append(Article(title=article.get('Title'), description=article.get('Summary'), source=article.get('DB')
                                     ,firstAuthor=article.get('FirstAuthor'), yearPublished=article.get('Year'),
                                     numberOfAuthors=article.get('AuthorCount'),journal=article.get('Journal'),
                                     volume=article.get('Volume'),pages=article.get('Pages'),DOI=article.get('Doi'),
-                                    eprint=article.get('Eprint'),bibtex=article.get('Bibtex'),link = article.get('Link') ,fullDate = datetime.strptime(article.get('FullDate') , '%Y-%m-%d'),user_id=sessionID))
+                                    eprint=article.get('Eprint'),bibtex=article.get('Bibtex'),link = article.get('Link') ,fullDate = date ,user_id=sessionID))
         db.session.bulk_save_objects([Article for Article in articleList])
         db.session.commit()
 
