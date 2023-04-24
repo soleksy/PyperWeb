@@ -212,7 +212,7 @@ async def processData(searchQuery,sessionID):
         pubmedArticleList = pubmedParser.ListOfArticles
         index += 1
 
-    articles = (sortByDateDescending(filterArticles(hepArticleList + arxivArticleList + pubmedArticleList)))
+    articles = filterArticles(hepArticleList + arxivArticleList + pubmedArticleList)
     
     if len(articles) == 0:
         error = "No results for the submited query"

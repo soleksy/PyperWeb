@@ -101,21 +101,15 @@ function httpPost(){
 {% endblock %}
 {% block title %} Search Results {% endblock %} {%
 block content %}
-
-<div class="main-container">
-   <div class="search-result-wrapper">
-       
+   <div class="main-container">
       <div class="search-results-container" id="style-12">
          {% set count = namespace(value=0) %}
          {% set marker = [] %}
          {% if results is defined %}
-
          {% for article in results.items%}
          {% set id = article.id %}
          <div class="article-wrapper">
-            
-            
-            <h5>{{article.title}}</h5>
+            <h5 class="article-title">{{article.title}}</h5>
             <h6>Source: {{article.source}}</h6>
             {% if article.description%}
             <section class="ABC{{count.value}}" id="style-12" style="display: none; overflow-y: scroll; max-height: 100px;">
@@ -144,70 +138,70 @@ block content %}
          {% endif %}
          </div>
 
-   </div>
+
    {% if results is defined %}
-   <div class="side-panel-container">
+   <div class="side-panel-container" id="style-12">
       <div class="side-panel-wrapper1">
          <article>
-         <h4>Search results for:<b>
-         <br />
-         <h4> "{{searchQuery}}"          {% if startDate %}
-          between</br>
-          {{startDate}} 
-          and 
-          {{endDate}}
-          {% endif %}</h3> 
-
-         </aritcle>
-      </div>
-      <div class="side-panel-wrapper2">
-         <h5> Select a date range </h5>
-         <form action="" method='POST' name="myform">
-            <section>
-               {{ form.csrf_token }}
-               <b>{{ form.startDate.label }}</b><br/>
-               {{form.startDate(class='datepicker', default=startDate)}}
-               {{form.hidden_tag()}}
-            </section>
-            <section>
-               <b>{{form.endDate.label}}</b><br/>
-               {{form.endDate(class='datepicker', default=endDate)}} 
-               {{form.hidden_tag()}}
-            </section>
-            <button class="btn btn-outline-primary" type="Submit" value="Submit" onSubmit={{form.submit()}}
-                Submit
-            </button>
-         </form>
-           <a type="button" class="btn btn-primary btn"  href="{{url_for('resetFilters')}}">Clear filters</a>
-         <div  class="pagination-page-info">
-            {% for page_num in results.iter_pages(left_edge=1, right_edge=2, left_current=1, right_current=2) %}
-               {% if page_num %}
-               {% if results.page == page_num %}
-               <a href="{{ url_for('searchResults', page=page_num,searchQuery=searchQuery) }}"
-                  class="btn btn-dark btn-lg">
-                     {{ page_num }}
-               </a>
-               {% else %}
+             <br>
+             <span class="search-query"> <h5><b>Search results for:<br/> "{{searchQuery}}" {% if startDate %}
+             between</br>
+             {{startDate}} 
+             and 
+             {{endDate}}
+             {% endif %}</span></b></h5>
+         </article>
+     </div>     
+     <div class="side-panel-wrapper2" id="style-12">
+      <h5> Select a date range </h5>
+      <form action="" method='POST' name="myform" class="date-range-form">
+          <section>
+              {{ form.csrf_token }}
+              <b>{{ form.startDate.label }}</b><br/>
+              {{form.startDate(class='datepicker', default=startDate)}}
+              {{form.hidden_tag()}}
+          </section>
+          <section>
+              <b>{{form.endDate.label}}</b><br/>
+              {{form.endDate(class='datepicker', default=endDate)}} 
+              {{form.hidden_tag()}}
+          </section>
+          <button class="btn btn-outline-primary" type="Submit" value="Submit" onSubmit={{form.submit()}}
+              Submit
+          </button>
+      </form>
+      <a type="button" class="btn btn-primary btn" href="{{url_for('resetFilters')}}">Clear filters</a>
+      <div class="pagination-wrapper">
+          <div class="pagination-page-info">
+              {% for page_num in results.iter_pages(left_edge=1, right_edge=2, left_current=1, right_current=2) %}
+                  {% if page_num %}
+                  {% if results.page == page_num %}
                   <a href="{{ url_for('searchResults', page=page_num,searchQuery=searchQuery) }}"
-                     class="btn btn-outline-dark btn-lg">
-                     {{ page_num }}
+                      class="btn btn-dark btn-sm">
+                          {{ page_num }}
                   </a>
-               {% endif %}
-               {% else %}
-               ...
-               {% endif %}
-            {% endfor %}
+                  {% else %}
+                      <a href="{{ url_for('searchResults', page=page_num,searchQuery=searchQuery) }}"
+                          class="btn btn-outline-dark btn-sm">
+                          {{ page_num }}
+                      </a>
+                  {% endif %}
+                  {% else %}
+                  ...
+                  {% endif %}
+              {% endfor %}
 
+            <h6 class="pagination_info">
+               Showing page {{ results.page }} of {{ results.pages }}
+            </h6>
          </div>
-      
-         <h6 class="test">
-         Showing page {{ results.page }} of {{ results.pages }}
-         </h6>
       </div>
+  </div>
+  
 
 
-      <div class="side-panel-wrapper3">
-         <h5>Click the button below in order to download the information on all the selected articles in the form of BibTex. </h5>
+      <div class="side-panel-wrapper3" id="style-12">
+         <h6>Download all the selected article citations in form of BibTeX </h6>
          <a type="button" class="btn btn-success btn-lg"  onclick="httpPost()">DOWNLOAD</a>
          <a type="button" class="btn btn-dark btn-sm"  onclick="uncheckAll()">UNCHECK ALL</a>
       </div>
