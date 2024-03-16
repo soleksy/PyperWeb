@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "pyperweb"
+version = "0.1.0"
+description = ""
+authors = ["soleksy <szy.oleksy@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+requests = "^2.31.0"
+bs4 = "^0.0.2"
+datetime = "^5.4"
+pylatexenc = "^2.10"
+orjson = "^3.9.15"
+xmltodict = "^0.13.0"
+flask-wtf = "^1.2.1"
+sqlalchemy = "^2.0.28"
+sqlalchemy-utils = "^0.41.1"
+httpx = "^0.27.0"
+flask-sqlalchemy = "^3.1.1"
+flask = {extras = ["async"], version = "^3.0.2"}
+lxml = "^5.1.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
