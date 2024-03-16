@@ -7,14 +7,19 @@ from datetime import datetime
 class PubmedHelper:
     def __init__(self , numOfArticles):
         self.CONST_QUERY_RESULTS=numOfArticles
-        self.CONST_FETCH_URL='https://eutilspreview.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi'
-        self.CONST_SEARCH_URL='https://eutilspreview.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi'
+        self.CONST_FETCH_URL='https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi'
+        self.CONST_SEARCH_URL='https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi'
 
     def search_pubmed(self, params):
         base_url = self.CONST_SEARCH_URL
         full_url = base_url + '?' + '&'.join([f'{key}={value}' for key, value in params.items()])
         response = requests.get(full_url)
-        return response.json()
+        try:
+            return response.json()
+        except json.JSONDecodeError:
+            print("Failed to decode JSON from response")
+            print("Response content:", response.text)
+            return None
 
     def get_article_ids(self,json_response):
         return json_response['esearchresult']['idlist']
