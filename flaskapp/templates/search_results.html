@@ -115,7 +115,7 @@ block content %}
             <section class="ABC{{count.value}}" id="style-12" style="display: none; overflow-y: scroll; max-height: 100px;">
                <h6>{{article.description}}</h6>
             </section>
-            <button class="btn btn-outline-primary fs-6 fw-bold" onclick="toggle_display({count.value})" id = "Button{{count.value}}" value = 'Show abstract'>
+            <button class="btn btn-outline-primary fs-6 fw-bold" onclick="toggle_display({{count.value}})" id = "Button{{count.value}}" value = 'Show abstract'>
             Show abstract
             </button>
             {% endif %}
